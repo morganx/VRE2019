@@ -1,0 +1,205 @@
+#NEXUS
+begin taxa;
+	dimensions ntax=103;
+	taxlabels
+	'10-1-01.snps.consensus.subs.fa'
+	'10-1-02.snps.consensus.subs.fa'
+	'10-1-04.snps.consensus.subs.fa'
+	'10-1-05.snps.consensus.subs.fa'
+	'10-1-09.snps.consensus.subs.fa'
+	'10-1A.snps.consensus.subs.fa'
+	'10-2-12.snps.consensus.subs.fa'
+	'10-2-17.snps.consensus.subs.fa'
+	'10-6-41.snps.consensus.subs.fa'
+	'10-6-46.snps.consensus.subs.fa'
+	'10-6-50.snps.consensus.subs.fa'
+	'10-6A.snps.consensus.subs.fa'
+	'11-3A.snps.consensus.subs.fa'
+	'11-7A.snps.consensus.subs.fa'
+	'12-03-20.snps.consensus.subs.fa'
+	'12-1VP.snps.consensus.subs.fa'
+	'12-3-27.snps.consensus.subs.fa'
+	'12-7-68.snps.consensus.subs.fa'
+	'12-8-01.snps.consensus.subs.fa'
+	'13-06-51.snps.consensus.subs.fa'
+	'13-1-05.snps.consensus.subs.fa'
+	'13-1-06.snps.consensus.subs.fa'
+	'13-1-07.snps.consensus.subs.fa'
+	'13-1-08.snps.consensus.subs.fa'
+	'13-1-09.snps.consensus.subs.fa'
+	'13-1-10.snps.consensus.subs.fa'
+	'13-10-96.snps.consensus.subs.fa'
+	'13-10-98.snps.consensus.subs.fa'
+	'13-1VP.snps.consensus.subs.fa'
+	'13-2-13.snps.consensus.subs.fa'
+	'13-2-16.snps.consensus.subs.fa'
+	'13-2-17.snps.consensus.subs.fa'
+	'13-2-19.snps.consensus.subs.fa'
+	'13-2VP.snps.consensus.subs.fa'
+	'13-4-32.snps.consensus.subs.fa'
+	'13-4-33.snps.consensus.subs.fa'
+	'13-4-35.snps.consensus.subs.fa'
+	'13-4VP.snps.consensus.subs.fa'
+	'13-5-45.snps.consensus.subs.fa'
+	'13-7-61.snps.consensus.subs.fa'
+	'13-8-72.snps.consensus.subs.fa'
+	'13-9-85.snps.consensus.subs.fa'
+	'13-9-86.snps.consensus.subs.fa'
+	'13-9-88.snps.consensus.subs.fa'
+	'5A-1.snps.consensus.subs.fa'
+	'5A-12.snps.consensus.subs.fa'
+	'5A-13.snps.consensus.subs.fa'
+	'5A-15.snps.consensus.subs.fa'
+	'5A-16.snps.consensus.subs.fa'
+	'5A-18.snps.consensus.subs.fa'
+	'5A-19.snps.consensus.subs.fa'
+	'5A-2.snps.consensus.subs.fa'
+	'5A-20.snps.consensus.subs.fa'
+	'5A-4.snps.consensus.subs.fa'
+	'5A-5.snps.consensus.subs.fa'
+	'5A-6.snps.consensus.subs.fa'
+	'5A-7.snps.consensus.subs.fa'
+	'5A-8.snps.consensus.subs.fa'
+	'5A-9.snps.consensus.subs.fa'
+	'5D-62.snps.consensus.subs.fa'
+	'AR00-128.snps.consensus.subs.fa'
+	'AR00-36.snps.consensus.subs.fa'
+	'AR01-1155.snps.consensus.subs.fa'
+	'AR01-673.snps.consensus.subs.fa'
+	'AR01-802.snps.consensus.subs.fa'
+	'AR01-912.snps.consensus.subs.fa'
+	'AR96-360.snps.consensus.subs.fa'
+	'AR99-1024.snps.consensus.subs.fa'
+	'AR99-1107.snps.consensus.subs.fa'
+	'AR99-190.snps.consensus.subs.fa'
+	'AR99-84.snps.consensus.subs.fa'
+	'ARL04-506.snps.consensus.subs.fa'
+	'ARL08-192.snps.consensus.subs.fa'
+	'EF13-2-12.snps.consensus.subs.fa'
+	'EF13-4-31.snps.consensus.subs.fa'
+	'IV12.snps.consensus.subs.fa'
+	'IV18.snps.consensus.subs.fa'
+	'IV22.snps.consensus.subs.fa'
+	'IV23.snps.consensus.subs.fa'
+	'IV30.snps.consensus.subs.fa'
+	'TV102.snps.consensus.subs.fa'
+	'TV105.snps.consensus.subs.fa'
+	'TV13.snps.consensus.subs.fa'
+	'TV154.snps.consensus.subs.fa'
+	'TV163.snps.consensus.subs.fa'
+	'TV19.snps.consensus.subs.fa'
+	'TV2.snps.consensus.subs.fa'
+	'TV28.snps.consensus.subs.fa'
+	'TV29.snps.consensus.subs.fa'
+	'TV3.snps.consensus.subs.fa'
+	'TV30.snps.consensus.subs.fa'
+	'TV32.snps.consensus.subs.fa'
+	'TV33.snps.consensus.subs.fa'
+	'TV46.snps.consensus.subs.fa'
+	'TV5.snps.consensus.subs.fa'
+	'TV7.snps.consensus.subs.fa'
+	'TV70.snps.consensus.subs.fa'
+	'TV9.snps.consensus.subs.fa'
+	'VV10.snps.consensus.subs.fa'
+	'VV14.snps.consensus.subs.fa'
+	'VV5.snps.consensus.subs.fa'
+	'VV8.snps.consensus.subs.fa'
+	'VV9.snps.consensus.subs.fa'
+;
+end;
+
+begin trees;
+	tree tree_1 = [&R] ('5A-20.snps.consensus.subs.fa':37.461628,('11-3A.snps.consensus.subs.fa':90.239189,('11-7A.snps.consensus.subs.fa':39.50486,('13-1-08.snps.consensus.subs.fa':42.847294,(('13-1-06.snps.consensus.subs.fa':50.867222,('13-8-72.snps.consensus.subs.fa':43.907543,'13-1-05.snps.consensus.subs.fa':47.311966):29.343994):10.816249,('13-1-07.snps.consensus.subs.fa':51.534966,(('13-2-16.snps.consensus.subs.fa':30.282175,('13-4VP.snps.consensus.subs.fa':28.663258,'13-2VP.snps.consensus.subs.fa':28.033131):10.877283):10.447429,('13-1-10.snps.consensus.subs.fa':25.612404,((('13-1VP.snps.consensus.subs.fa':28.945744,'13-9-88.snps.consensus.subs.fa':15.996961):9.02697,((('13-9-86.snps.consensus.subs.fa':27.199148,'EF13-4-31.snps.consensus.subs.fa':40.160255):18.846476,'13-5-45.snps.consensus.subs.fa':36.629555):7.873308,(('13-7-61.snps.consensus.subs.fa':39.806694,('13-10-98.snps.consensus.subs.fa':27.421789,'13-10-96.snps.consensus.subs.fa':18.094883):7.259154):7.584197,('13-4-33.snps.consensus.subs.fa':42.903873,'13-4-32.snps.consensus.subs.fa':30.756042):12.281325):4.931463):6.375992):5.539346,((('13-9-85.snps.consensus.subs.fa':42.448208,'13-2-13.snps.consensus.subs.fa':26.538218):11.421478,'13-4-35.snps.consensus.subs.fa':28.284906):11.941868,((('13-2-19.snps.consensus.subs.fa':26.572224,('13-06-51.snps.consensus.subs.fa':31.030231,'13-2-17.snps.consensus.subs.fa':26.207115):11.024426):7.657322,('13-1-09.snps.consensus.subs.fa':31.003063,'EF13-2-12.snps.consensus.subs.fa':25.12459):10.146743):8.587867,(((((('12-1VP.snps.consensus.subs.fa':58.83107,((('12-03-20.snps.consensus.subs.fa':49.285263,'12-7-68.snps.consensus.subs.fa':32.446415):12.2872,('12-3-27.snps.consensus.subs.fa':42.767406,'12-8-01.snps.consensus.subs.fa':23.910397):11.97453):22.050076,'ARL08-192.snps.consensus.subs.fa':109.76757):18.480888):16.701256,(('AR99-1107.snps.consensus.subs.fa':67.563194,('AR01-912.snps.consensus.subs.fa':34.903751,('VV9.snps.consensus.subs.fa':49.769024,(('VV10.snps.consensus.subs.fa':22.643404,'VV5.snps.consensus.subs.fa':51.976425):9.239542,('VV14.snps.consensus.subs.fa':33.221729,('IV22.snps.consensus.subs.fa':55.94178,('VV8.snps.consensus.subs.fa':34.469944,'IV30.snps.consensus.subs.fa':11.882867):10.187362):19.150928):11.577):6.757639):7.758702):20.746185):35.730228,('AR99-1024.snps.consensus.subs.fa':29.859884,('AR00-36.snps.consensus.subs.fa':38.997009,'AR99-190.snps.consensus.subs.fa':29.66531):6.63436):5.808989):7.972137):5.697862,((('AR01-673.snps.consensus.subs.fa':42.065983,'AR00-128.snps.consensus.subs.fa':42.915577):12.177568,'AR99-84.snps.consensus.subs.fa':42.065376):6.583616,(('AR01-802.snps.consensus.subs.fa':57.331306,(('TV3.snps.consensus.subs.fa':71.809113,'TV2.snps.consensus.subs.fa':69.836983):13.878193,('TV163.snps.consensus.subs.fa':25.526163,'TV154.snps.consensus.subs.fa':48.4235):9.128602):17.103889):12.498165,(('ARL04-506.snps.consensus.subs.fa':28.384394,('IV18.snps.consensus.subs.fa':39.239231,'IV23.snps.consensus.subs.fa':65.190498):15.062066):7.800968,(((('TV9.snps.consensus.subs.fa':19.443748,'TV33.snps.consensus.subs.fa':31.209202):6.695049,('TV19.snps.consensus.subs.fa':13.779362,((('IV12.snps.consensus.subs.fa':48.429554,'TV7.snps.consensus.subs.fa':35.538071):16.796993,'TV13.snps.consensus.subs.fa':29.636898):16.265543,'TV5.snps.consensus.subs.fa':40.024548):7.413964):18.90069):8.999541,('TV29.snps.consensus.subs.fa':44.046997,('TV28.snps.consensus.subs.fa':36.169453,'TV30.snps.consensus.subs.fa':34.396027):23.771166):10.36919):17.226204,('TV46.snps.consensus.subs.fa':47.499409,'TV70.snps.consensus.subs.fa':29.002659):13.82114):5.456308):6.204387):4.090649):8.935193):5.821452,(((('5A-18.snps.consensus.subs.fa':48.846558,'5A-1.snps.consensus.subs.fa':42.013817):10.158684,('5A-5.snps.consensus.subs.fa':38.044308,'5A-8.snps.consensus.subs.fa':31.991003):7.682086):6.397845,(('5A-9.snps.consensus.subs.fa':38.522808,('AR96-360.snps.consensus.subs.fa':46.003792,(('5A-19.snps.consensus.subs.fa':28.455811,(('5A-4.snps.consensus.subs.fa':37.222301,'5A-6.snps.consensus.subs.fa':16.663742):9.527287,'5A-7.snps.consensus.subs.fa':25.708412):12.050969):11.438581,(('5A-13.snps.consensus.subs.fa':26.918274,'5A-12.snps.consensus.subs.fa':35.006329):13.501146,'5A-15.snps.consensus.subs.fa':16.929575):10.071712):5.791687):15.342834):8.039667,'5A-16.snps.consensus.subs.fa':34.405621):9.948702):12.418439,('5A-2.snps.consensus.subs.fa':46.290695,'5D-62.snps.consensus.subs.fa':81.96611):33.160072):7.57998):13.67751,'AR01-1155.snps.consensus.subs.fa':56.719791):5.885473,(('TV32.snps.consensus.subs.fa':41.200649,('TV102.snps.consensus.subs.fa':23.302313,'TV105.snps.consensus.subs.fa':29.244883):20.538561):23.305874,('10-1-01.snps.consensus.subs.fa':45.579643,((('10-1-09.snps.consensus.subs.fa':36.983551,('10-1-05.snps.consensus.subs.fa':30.483435,(('10-6-50.snps.consensus.subs.fa':42.877651,'10-2-17.snps.consensus.subs.fa':65.566559):27.133846,'10-1-02.snps.consensus.subs.fa':53.448162):15.050369):10.021087):3.066968,(('10-1A.snps.consensus.subs.fa':22.454573,'10-2-12.snps.consensus.subs.fa':25.295036):10.579374,('10-6-46.snps.consensus.subs.fa':31.910528,'10-6A.snps.consensus.subs.fa':23.281145):6.237249):1.396903):6.881416,('10-1-04.snps.consensus.subs.fa':38.239933,'10-6-41.snps.consensus.subs.fa':32.67252):7.761954):8.078503):9.173342):5.570635):11.343226):5.829677):4.752012):4.470301):11.804385):4.399312):11.739681):22.07885):38.715397):59.816982):99.947304);
+end;
+
+begin figtree;
+	set appearance.backgroundColorAttribute="Default";
+	set appearance.backgroundColour=#ffffff;
+	set appearance.branchColorAttribute="User selection";
+	set appearance.branchColorGradient=false;
+	set appearance.branchLineWidth=1.0;
+	set appearance.branchMinLineWidth=0.0;
+	set appearance.branchWidthAttribute="Fixed";
+	set appearance.foregroundColour=#000000;
+	set appearance.hilightingGradient=false;
+	set appearance.selectionColour=#2d3680;
+	set branchLabels.colorAttribute="User selection";
+	set branchLabels.displayAttribute="Branch times";
+	set branchLabels.fontName="sansserif";
+	set branchLabels.fontSize=8;
+	set branchLabels.fontStyle=0;
+	set branchLabels.isShown=false;
+	set branchLabels.significantDigits=4;
+	set layout.expansion=0;
+	set layout.layoutType="RECTILINEAR";
+	set layout.zoom=0;
+	set legend.attribute=null;
+	set legend.fontSize=10.0;
+	set legend.isShown=false;
+	set legend.significantDigits=4;
+	set nodeBars.barWidth=4.0;
+	set nodeBars.displayAttribute=null;
+	set nodeBars.isShown=false;
+	set nodeLabels.colorAttribute="User selection";
+	set nodeLabels.displayAttribute="Node ages";
+	set nodeLabels.fontName="sansserif";
+	set nodeLabels.fontSize=8;
+	set nodeLabels.fontStyle=0;
+	set nodeLabels.isShown=false;
+	set nodeLabels.significantDigits=4;
+	set nodeShapeExternal.colourAttribute="User selection";
+	set nodeShapeExternal.isShown=false;
+	set nodeShapeExternal.minSize=10.0;
+	set nodeShapeExternal.scaleType=Width;
+	set nodeShapeExternal.shapeType=Circle;
+	set nodeShapeExternal.size=4.0;
+	set nodeShapeExternal.sizeAttribute="Fixed";
+	set nodeShapeInternal.colourAttribute="User selection";
+	set nodeShapeInternal.isShown=false;
+	set nodeShapeInternal.minSize=10.0;
+	set nodeShapeInternal.scaleType=Width;
+	set nodeShapeInternal.shapeType=Circle;
+	set nodeShapeInternal.size=4.0;
+	set nodeShapeInternal.sizeAttribute="Fixed";
+	set polarLayout.alignTipLabels=false;
+	set polarLayout.angularRange=0;
+	set polarLayout.rootAngle=0;
+	set polarLayout.rootLength=100;
+	set polarLayout.showRoot=true;
+	set radialLayout.spread=0.0;
+	set rectilinearLayout.alignTipLabels=false;
+	set rectilinearLayout.curvature=0;
+	set rectilinearLayout.rootLength=100;
+	set scale.offsetAge=0.0;
+	set scale.rootAge=1.0;
+	set scale.scaleFactor=1.0;
+	set scale.scaleRoot=false;
+	set scaleAxis.automaticScale=true;
+	set scaleAxis.fontSize=8.0;
+	set scaleAxis.isShown=false;
+	set scaleAxis.lineWidth=1.0;
+	set scaleAxis.majorTicks=1.0;
+	set scaleAxis.minorTicks=0.5;
+	set scaleAxis.origin=0.0;
+	set scaleAxis.reverseAxis=false;
+	set scaleAxis.showGrid=true;
+	set scaleBar.automaticScale=true;
+	set scaleBar.fontSize=10.0;
+	set scaleBar.isShown=true;
+	set scaleBar.lineWidth=1.0;
+	set scaleBar.scaleRange=0.0;
+	set tipLabels.colorAttribute="User selection";
+	set tipLabels.displayAttribute="Names";
+	set tipLabels.fontName="sansserif";
+	set tipLabels.fontSize=8;
+	set tipLabels.fontStyle=0;
+	set tipLabels.isShown=true;
+	set tipLabels.significantDigits=4;
+	set trees.order=false;
+	set trees.orderType="increasing";
+	set trees.rooting=false;
+	set trees.rootingType="User Selection";
+	set trees.transform=false;
+	set trees.transformType="cladogram";
+end;
+

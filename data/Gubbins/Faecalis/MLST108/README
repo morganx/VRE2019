@@ -1,0 +1,27 @@
+README
+
+To do the Gubbins analysis, all *.snps.consensus.subs.fa
+(which is an alignment of each strain's sequence to the
+reference genome, with the given strain's SNPS substituted
+as appropriate) produced by Snippy were copied into a
+directory. Because plasmids are highly heterogeneous, the
+chromosomal sequences (ie plasmids omitted) were extracted
+from the FASTA files.
+
+run.gubbins.py was run on this alignment (all.mfa) according 
+to default parameters, using ARO/DG (ref) as the reference
+
+The outputs of gubbins are in this folder.
+
+all.filtered.polymorphic.sites.fasta, the gubbins-produced
+alignment of snps with recombinants filtered out, was used
+as input for the program snp-dists to calculate a distance
+matrix (distance-matrix.txt) of SNPS separating genomes which
+ was used to create heatmap visualizations. 
+ 
+ https://github.com/tseemann/snp-dists
+ 
+ Gubbins was used to make two visualizations: snps.pdf shows the 
+ position of SNPS in genomes, and 108.pdf shows recombination. 
+ In 108.pdf, blue corresponds to isolate-unique recombination, 
+ red is commonrecombination across strains

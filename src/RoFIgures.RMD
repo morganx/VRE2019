@@ -1,0 +1,654 @@
+---
+title: "Ro_Figures.RMD"
+author: "XCM & Ro Rushton-Green"
+date: "4/17/2019"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(RColorBrewer)
+library(ggplot2)
+library(ape)
+library(ggtree)
+library(treeio)
+library(cowplot)
+library(ggpubr)
+library(BactDating)
+library(coda)
+library(tidytree)
+library(pegas)
+library(reshape2)
+library(dplyr)
+library(tidyverse)
+```
+
+Figure 1: Total E. faecium Core SNP Distance Heatmap (w/o outliers ARL09-409, AR98-565)
+
+```{r}
+spectral <- colorRampPalette(brewer.pal(11, "Spectral"))(100)
+t_faecium_dist_no409565 <- read.table(file = "~/VRE2019/data/Gubbins/Faecium/faecium_no_outliers/snpdistances.txt", header = TRUE, row.names =1, sep="\t")
+t_faecium_dist_mat_no409565 <- data.matrix(t_faecium_dist_no409565)
+#reservoir side column
+xsidecolsfaecium <- c("#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142")
+#strain side row
+ysiderowsfaecium <- c("#9E0142", "#9E0142", "#9E0142", "#9E0142", "#CAE99D", "#EC6145", "#9E0142", "#9E0142", "#CAE99D", "#9E0142", "#CAE99D", "#FCAA5F", "#FDC877", "#A6DBA4", "#A6DBA4", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#FDC877", "#FDC877", "#FDC877", "#FDC877", "#A6DBA4", "#FDC877", "#A6DBA4", "#FDC877", "#FDC877", "#A6DBA4", "#A6DBA4", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#FDC877", "#FDC877", "#FDC877", "#FDC877", "#FEE391", "#A6DBA4", "#FEE391", "#F7FCB3", "#FEE391", "#4470B1", "#A6DBA4", "#A6DBA4", "#F7834D", "#9E0142", "#7ECBA4", "#9E0142", "#FEF5AF", "#9E0142", "#3B92B8", "#59B4AA", "#E8F69C", "#E8F69C", "#E8F69C", "#9E0142", "#9E0142", "#E8F69C", "#9E0142", "#9E0142", "#EC6145", "#9E0142", "#BE2449", "#CAE99D", "#FEF5AF", "#EC6145", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#BE2449", "#FEF5AF", "#FEF5AF", "#9E0142", "#9E0142", "#CAE99D", "#9E0142", "#DA464C", "#3B92B8", "#DA464C", "#FEF5AF", "#FEF5AF", "#59B4AA", "#BE2449", "#BE2449")
+#year side row
+ysideyearfaecium <-c("#9E0142", "#9E0142", "#E25249", "#E25249", "#E25249", "#E25249", "#E25249", "#E25249", "#E25249", "#E25249", "#E25249", "#E25249", "#F88D51", "#EDF7A3", "#EDF7A3", "#A1D9A4", "#A1D9A4", "#A1D9A4", "#A1D9A4", "#A1D9A4", "#A1D9A4", "#A1D9A4", "#A1D9A4", "#A1D9A4", "#A1D9A4", "#A1D9A4", "#A1D9A4", "#A1D9A4", "#A1D9A4", "#A1D9A4", "#48A0B2", "#48A0B2", "#48A0B2", "#48A0B2", "#48A0B2", "#48A0B2", "#48A0B2", "#48A0B2", "#48A0B2", "#48A0B2", "#48A0B2", "#48A0B2", "#48A0B2", "#48A0B2", "#48A0B2", "#48A0B2", "#48A0B2", "#48A0B2", "#48A0B2", "#48A0B2", "#48A0B2", "#48A0B2", "#48A0B2", "#48A0B2", "#48A0B2", "#48A0B2", "#48A0B2", "#48A0B2", "#48A0B2", "#48A0B2", "#48A0B2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#FBA45C", "#FBA45C", "#FBA45C", "#FBA45C", "#FBA45C", "#FBA45C", "#FBA45C", "#FBA45C", "#FBA45C", "#FBA45C", "#FBA45C", "#FBA45C", "#FBA45C", "#FBA45C", "#FBA45C", "#FBA45C", "#FBA45C", "#FBA45C", "#FBA45C", "#FBA45C", "#FBA45C", "#FBA45C", "#FBA45C", "#FBA45C", "#FBA45C", "#FBA45C", "#FBA45C", "#FBA45C", "#FBA45C", "#FBA45C", "#FBA45C", "#FBA45C", "#FBA45C", "#FBA45C", "#FBA45C", "#FBA45C", "#FBA45C", "#FBA45C", "#FBA45C", "#FBA45C", "#FBA45C", "#FBA45C", "#FBA45C", "#FBA45C", "#FBA45C", "#FBA45C")
+#SNP distance heatmap
+pdf("~/VRE2019/results/Fig1.pdf")
+t_faecium_dist_heatmap_no409565 <- heatmap(t_faecium_dist_mat_no409565, Rowv=TRUE, Colv = TRUE, col = spectral, scale = "none", margins=c(5,6), main ="Total Faecium Isolates SNP Distances (Without Outliers ARL09-409, ARL98-565)", RowSideColors = ysideyearfaecium)
+#max SNP distance
+#max(t_faecium_dist_mat_no409565)
+dev.off()
+```
+Figure 2A
+```{r}
+spectral <- colorRampPalette(brewer.pal(11, "Spectral"))(100)
+t_faecalis_dist <- read.table(file = "~/VRE2019/data/Gubbins/Faecalis/All_Strains/faecalis_dist_matrix.txt", header = TRUE, row.names = 1, sep="\t")
+t_faecalis_dist_mat <- data.matrix(t_faecalis_dist)
+#reservoir side column
+xsidecolsfaecalis <- c("#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142")
+#strain side row
+ysiderowsfaecalis <- c("#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#FFFFBF", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#9E0142", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#5E4FA2", "#F88D51", "#88CFA4", "#FFFFBF", "#5E4FA2", "#FFFFBF", "#F88D51", "#5E4FA2", "#88CFA4", "#88CFA4", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51")
+#year side column
+ysideyearfaecalis <-c("#FFFFBF", "#FFFFBF", "#FFFFBF", "#FFFFBF", "#FFFFBF", "#FFFFBF", "#FFFFBF", "#FFFFBF", "#FFFFBF", "#FFFFBF", "#FFFFBF", "#FFFFBF", "#FFFFBF", "#FFFFBF", "#FFFFBF", "#FFFFBF", "#FFFFBF", "#FFFFBF", "#FFFFBF", "#FFFFBF", "#FFFFBF", "#FFFFBF", "#FFFFBF", "#FFFFBF", "#FFFFBF", "#FFFFBF", "#FFFFBF", "#FFFFBF", "#FFFFBF", "#FFFFBF", "#FFFFBF", "#FFFFBF", "#FFFFBF", "#FFFFBF", "#FFFFBF", "#FFFFBF", "#FFFFBF", "#FFFFBF", "#FFFFBF", "#FFFFBF", "#FFFFBF", "#FFFFBF", "#FFFFBF", "#FFFFBF", "#FDBE6E", "#FDBE6E", "#FDBE6E", "#FDBE6E", "#FDBE6E", "#FDBE6E", "#FDBE6E", "#FDBE6E", "#FDBE6E", "#FDBE6E", "#FDBE6E", "#FDBE6E", "#FDBE6E", "#FDBE6E", "#FDBE6E", "#FDBE6E", "#FDBE6E", "#FDBE6E", "#FFFFBF", "#FFFFBF", "#FFFFBF", "#FFFFBF", "#FFFFBF", "#9E0142", "#E95D47", "#E95D47", "#E95D47", "#E95D47", "#54AEAC", "#54AEAC", "#5E4FA2", "#FFFFBF", "#FFFFBF", "#BEE5A0", "#BEE5A0", "#BEE5A0", "#BEE5A0", "#BEE5A0", "#BEE5A0", "#BEE5A0", "#BEE5A0", "#BEE5A0", "#BEE5A0", "#BEE5A0", "#BEE5A0", "#BEE5A0", "#BEE5A0", "#BEE5A0", "#BEE5A0", "#BEE5A0", "#BEE5A0", "#BEE5A0", "#BEE5A0", "#BEE5A0", "#BEE5A0", "#BEE5A0", "#BEE5A0", "#BEE5A0", "#BEE5A0", "#BEE5A0", "#BEE5A0", "#BEE5A0", "#BEE5A0", "#BEE5A0", "#BEE5A0", "#BEE5A0", "#BEE5A0", "#BEE5A0", "#BEE5A0")
+#SNP distance heatmap
+pdf("~/VRE2019/results/Fig2A.pdf")
+t_faecalis_dist_heatmap <- heatmap(t_faecalis_dist_mat, Rowv=TRUE, Colv = TRUE, col = spectral, scale = "none", margins=c(5,6), main ="Total Faecalis Isolates SNP Distances", RowSideColors = ysideyearfaecalis)
+#max SNP distance
+#max(t_faecalis_dist_mat)
+dev.off()
+```
+Figure 2b: Total Strain 108 E. faecalis Core SNP Distance Heatmap (PacBio Ref)
+```{r}
+spectral <- colorRampPalette(brewer.pal(11, "Spectral"))(100)
+input_108<-read.table("~/VRE2019/data/Gubbins/Faecalis/MLST108/snp-dists.txt", row.names=1, header=TRUE, sep="\t")
+mat_108 <- data.matrix(input_108)
+
+#reservoir side column
+xsidecols108 <- c("grey", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142","#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142")
+#year side column
+ysideyear108 <-c("#FFFFBF", "#FFFFBF", "#FFFFBF", "#FFFFBF", "#FFFFBF", "#FFFFBF", "#FFFFBF", "#FFFFBF", "#FFFFBF", "#FFFFBF", "#FFFFBF", "#FFFFBF", "#FFFFBF", "#FFFFBF", "#FFFFBF", "#FFFFBF", "#FFFFBF", "#FFFFBF", "#FFFFBF", "#FFFFBF", "#FFFFBF", "#FFFFBF", "#FFFFBF", "#FFFFBF", "#FFFFBF", "#FFFFBF", "#FFFFBF", "#FFFFBF", "#FFFFBF", "#FFFFBF", "#FFFFBF", "#FFFFBF", "#FFFFBF", "#FFFFBF", "#FFFFBF", "#FFFFBF", "#FFFFBF", "#FFFFBF", "#FFFFBF", "#FFFFBF", "#FFFFBF", "#FFFFBF", "#FFFFBF", "#FFFFBF", "#FFFFBF", "#FDBE6E", "#FDBE6E", "#FDBE6E", "#FDBE6E", "#FDBE6E", "#FDBE6E", "#FDBE6E", "#FDBE6E", "#FDBE6E", "#FDBE6E", "#FDBE6E", "#FDBE6E", "#FDBE6E", "#FDBE6E", "#FDBE6E", "#FDBE6E", "#FDBE6E", "#FDBE6E", "#FFFFBF", "#FFFFBF", "#FFFFBF", "#FFFFBF", "#9E0142", "#E95D47", "#E95D47", "#E95D47", "#E95D47", "#54AEAC", "#5E4FA2", "#FFFFBF", "#FFFFBF", "#BEE5A0", "#BEE5A0", "#BEE5A0", "#BEE5A0", "#BEE5A0", "#BEE5A0", "#BEE5A0", "#BEE5A0", "#BEE5A0", "#BEE5A0", "#BEE5A0", "#BEE5A0", "#BEE5A0", "#BEE5A0", "#BEE5A0", "#BEE5A0", "#BEE5A0", "#BEE5A0", "#BEE5A0", "#BEE5A0", "#BEE5A0", "#BEE5A0", "#BEE5A0", "#BEE5A0", "#BEE5A0", "#BEE5A0", "#BEE5A0", "#BEE5A0")
+pdf("~/VRE2019/results/Fig2B.pdf")
+heatmap(mat_108, Rowv=TRUE, Colv=TRUE, col = spectral, scale = "none", margins=c(5,6), main ="Total Faecalis 108 Isolates SNP Distances", RowSideColors = ysideyear108)
+#max SNP distance
+max(mat_108)
+dev.off()
+
+```
+Figure 3a: E. faecalis Resistome Heatmap
+```{r}
+specmap <- colorRampPalette(spectral)(3)
+faecalis_resistomes <- read.csv(file = "~/VRE2019/data/total_faecalis_resistome.csv", header = TRUE, row.names =1)
+faecalis_resistomes_mat <- data.matrix(faecalis_resistomes)
+#reservoir side row
+ysidereservoirfaecalis <- c("#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142")
+#strain side row
+ysiderowsfaecalis <- c("#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#FFFFBF", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#9E0142", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#5E4FA2", "#F88D51", "#88CFA4", "#FFFFBF", "#5E4FA2", "#FFFFBF", "#F88D51", "#5E4FA2", "#88CFA4", "#88CFA4", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51")
+#year side column
+ysideyearfaecalis <-c("#FFFFBF", "#FFFFBF", "#FFFFBF", "#FFFFBF", "#FFFFBF", "#FFFFBF", "#FFFFBF", "#FFFFBF", "#FFFFBF", "#FFFFBF", "#FFFFBF", "#FFFFBF", "#FFFFBF", "#FFFFBF", "#FFFFBF", "#FFFFBF", "#FFFFBF", "#FFFFBF", "#FFFFBF", "#FFFFBF", "#FFFFBF", "#FFFFBF", "#FFFFBF", "#FFFFBF", "#FFFFBF", "#FFFFBF", "#FFFFBF", "#FFFFBF", "#FFFFBF", "#FFFFBF", "#FFFFBF", "#FFFFBF", "#FFFFBF", "#FFFFBF", "#FFFFBF", "#FFFFBF", "#FFFFBF", "#FFFFBF", "#FFFFBF", "#FFFFBF", "#FFFFBF", "#FFFFBF", "#FFFFBF", "#FFFFBF", "#FDBE6E", "#FDBE6E", "#FDBE6E", "#FDBE6E", "#FDBE6E", "#FDBE6E", "#FDBE6E", "#FDBE6E", "#FDBE6E", "#FDBE6E", "#FDBE6E", "#FDBE6E", "#FDBE6E", "#FDBE6E", "#FDBE6E", "#FDBE6E", "#FDBE6E", "#FDBE6E", "#FFFFBF", "#FFFFBF", "#FFFFBF", "#FFFFBF", "#FFFFBF", "#9E0142", "#E95D47", "#E95D47", "#E95D47", "#E95D47", "#54AEAC", "#54AEAC", "#5E4FA2", "#FFFFBF", "#FFFFBF", "#BEE5A0", "#BEE5A0", "#BEE5A0", "#BEE5A0", "#BEE5A0", "#BEE5A0", "#BEE5A0", "#BEE5A0", "#BEE5A0", "#BEE5A0", "#BEE5A0", "#BEE5A0", "#BEE5A0", "#BEE5A0", "#BEE5A0", "#BEE5A0", "#BEE5A0", "#BEE5A0", "#BEE5A0", "#BEE5A0", "#BEE5A0", "#BEE5A0", "#BEE5A0", "#BEE5A0", "#BEE5A0", "#BEE5A0", "#BEE5A0", "#BEE5A0", "#BEE5A0", "#BEE5A0", "#BEE5A0", "#BEE5A0", "#BEE5A0", "#BEE5A0", "#BEE5A0", "#BEE5A0")
+#hsd side row
+ysidehsdfaecalis <-c("#FDD380", "#FFFFBF", "#FDD380", "#FDD380", "#FDD380","#DC494C", "#FDD380", "#FDD380", "#DC494C", "#FDD380", "#FDD380", "#DC494C", "#DC494C", "#DC494C", "#FDD380", "#DC494C", "#FDD380", "#FDD380", "#FDD380", "#DC494C", "#DC494C", "#DC494C", "#FDD380", "#DC494C", "#DC494C", "#DC494C", "#DC494C", "#FDD380", "#DC494C", "#FDD380", "#FDD380", "#DC494C", "#DC494C", "#DC494C", "#DC494C", "#DC494C", "#DC494C", "#DC494C", "#DC494C", "#DC494C", "#DC494C", "#DC494C", "#DC494C", "#DC494C", "#FDD380", "#FDD380", "#FDD380", "#FDD380", "#FDD380", "#DC494C", "#FDD380", "#DC494C", "#FDD380", "#FDD380", "#FDD380", "#FDD380", "#DC494C", "#FDD380", "#FDD380", "#DC494C", "#DC494C", "#DC494C", "#FDD380", "#3F96B7", "#DC494C", "#FDD380", "#DC494C", "#DC494C", "#FDD380", "#DC494C", "#DC494C", "#DC494C", "#3F96B7", "#FDD380", "#DC494C", "#DC494C", "#DC494C", "#DC494C", "#DC494C", "#DC494C", "#DC494C", "#FDD380", "#DC494C", "#3F96B7", "#DC494C", "#3F96B7", "#3F96B7", "#3F96B7", "#3F96B7", "#DC494C", "#3F96B7", "#3F96B7", "#3F96B7", "#DC494C", "#DC494C", "#DC494C", "#DC494C", "#FDD380", "#FDD380", "#DC494C", "#DC494C", "#FDD380", "#DC494C", "#DC494C", "#FDD380", "#FDD380", "#DC494C", "#DC494C", "#FDD380", "#FFFFBF", "#DC494C", "#FDD380", "#DC494C")
+#resistome heatmap (red=absent, blue=present)
+pdf("~/VRE2019/results/Fig3A.pdf")
+faecalis_resistomes_heatmap <- heatmap(faecalis_resistomes_mat, Rowv=TRUE, Colv = NA, col = specmap, scale = "none", margins=c(5,6), main ="E Faecalis Isolate Resistomes", cexCol = 2, RowSideColors = ysidehsdfaecalis)
+dev.off()
+```
+Figure 3b: E. faecium Resistome Heatmap
+```{r}
+specmap <- colorRampPalette(spectral)(6)
+faecium_resistomes <- read.csv(file = "~/VRE2019/data/total_faecium_resistome.csv", header = TRUE, row.names =1)
+faecium_resistomes_mat <- data.matrix(faecium_resistomes)
+#reservoir side row
+ysidereservoirfaecium <- c("#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142")
+#strain side row
+ysiderowsfaecium <- c("#9E0142", "#9E0142", "#9E0142", "#9E0142", "#BEE5A0", "#E95D47", "#9E0142", "#9E0142", "#BEE5A0", "#9E0142", "#BEE5A0", "#FB9F5A", "#FEEDA2", "#FDBE6E", "#9BD7A4", "#9BD7A4", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#FDBE6E", "#FDBE6E", "#FDBE6E", "#FDBE6E", "#9BD7A4", "#FDBE6E", "#9BD7A4", "#FDBE6E", "#FDBE6E", "#9BD7A4", "#9BD7A4", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#FDBE6E", "#FDBE6E", "#FDBE6E", "#FDBE6E", "#FDDA86", "#9BD7A4", "#FDDA86", "#F1F9A9", "#FDDA86", "#456EB1", "#9BD7A4", "#9BD7A4", "#9E0142", "#F67B49", "#9E0142", "#75C8A4", "#9E0142", "#FFFFBF", "#9E0142", "#378EBA", "#54AEAC", "#DFF299", "#DFF299", "#DFF299", "#9E0142", "#9E0142", "#DFF299", "#9E0142", "#9E0142", "#E95D47", "#9E0142", "#BC2249", "#BEE5A0", "#FFFFBF", "#E95D47", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#BC2249", "#FFFFBF", "#FFFFBF", "#9E0142", "#9E0142", "#BEE5A0", "#9E0142", "#D8434D", "#378EBA", "#D8434D", "#FFFFBF", "#FFFFBF", "#54AEAC", "#BC2249", "#BC2249")
+#year side row
+ysideyearfaecium <-c("#DC494C", "#DC494C", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#9E0142", "#FFFFBF", "#D7EF9B", "#D7EF9B", "#88CFA4", "#88CFA4", "#88CFA4", "#88CFA4", "#88CFA4", "#88CFA4", "#88CFA4", "#88CFA4", "#88CFA4", "#88CFA4", "#88CFA4", "#88CFA4", "#88CFA4", "#88CFA4", "#88CFA4", "#3F96B7", "#3F96B7", "#3F96B7", "#3F96B7", "#3F96B7", "#3F96B7", "#3F96B7", "#3F96B7", "#3F96B7", "#3F96B7", "#3F96B7", "#3F96B7", "#3F96B7", "#3F96B7", "#3F96B7", "#3F96B7", "#3F96B7", "#3F96B7", "#3F96B7", "#3F96B7", "#3F96B7", "#3F96B7", "#3F96B7", "#3F96B7", "#3F96B7", "#3F96B7", "#3F96B7", "#3F96B7", "#3F96B7", "#3F96B7", "#3F96B7", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#FDD380", "#FDD380", "#FDD380", "#FDD380", "#FDD380", "#FDD380", "#FDD380", "#FDD380", "#FDD380", "#FDD380", "#FDD380", "#FDD380", "#FDD380", "#FDD380", "#FDD380", "#FDD380", "#FDD380", "#FDD380", "#FDD380", "#FDD380", "#FDD380", "#FDD380", "#FDD380", "#FDD380", "#FDD380", "#FDD380", "#FDD380", "#FDD380", "#FDD380", "#FDD380", "#FDD380", "#FDD380", "#FDD380", "#FDD380", "#FDD380", "#FDD380", "#FDD380", "#FDD380", "#FDD380", "#FDD380", "#FDD380", "#FDD380", "#FDD380", "#FDD380", "#FDD380", "#FDD380")
+#resistome heatmap (red=absent, blue=present)
+pdf("~/VRE2019/results/Fig3B.pdf")
+faecium_resistomes_heatmap <- heatmap(faecium_resistomes_mat, Rowv=TRUE, Colv = NA, col = specmap, scale = "none", margins=c(5,6), main ="E Faecium Isolate Resistomes", cexCol = 2, RowSideColors = ysidereservoirfaecium)
+dev.off()
+```
+
+Supplementary Figures
+
+Supplementary Figure 2: Total E. faecium Core SNP Distance Heatmap
+```{r}
+spectral <- colorRampPalette(brewer.pal(11, "Spectral"))(100)
+t_faecium_dist <- read.table(file = "~/VRE2019/data/Gubbins/Faecium/all_faecium/faecium_dist_matrix.txt", header = TRUE, row.names =1, sep="\t")
+t_faecium_dist_mat <- data.matrix(t_faecium_dist)
+#reservoir side row
+ysidereservoirfaecium <- c("#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142")
+#strain side row
+ysiderowsfaecium <- c("#9E0142", "#9E0142", "#9E0142", "#9E0142", "#BEE5A0", "#E95D47", "#9E0142", "#9E0142", "#BEE5A0", "#9E0142", "#BEE5A0", "#FB9F5A", "#FEEDA2", "#FDBE6E", "#9BD7A4", "#9BD7A4", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#FDBE6E", "#FDBE6E", "#FDBE6E", "#FDBE6E", "#9BD7A4", "#FDBE6E", "#9BD7A4", "#FDBE6E", "#FDBE6E", "#9BD7A4", "#9BD7A4", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#FDBE6E", "#FDBE6E", "#FDBE6E", "#FDBE6E", "#FDDA86", "#9BD7A4", "#FDDA86", "#F1F9A9", "#FDDA86", "#456EB1", "#9BD7A4", "#9BD7A4", "#9E0142", "#F67B49", "#9E0142", "#75C8A4", "#9E0142", "#FFFFBF", "#9E0142", "#378EBA", "#54AEAC", "#DFF299", "#DFF299", "#DFF299", "#9E0142", "#9E0142", "#DFF299", "#9E0142", "#9E0142", "#E95D47", "#9E0142", "#BC2249", "#BEE5A0", "#FFFFBF", "#E95D47", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#BC2249", "#FFFFBF", "#FFFFBF", "#9E0142", "#9E0142", "#BEE5A0", "#9E0142", "#D8434D", "#378EBA", "#D8434D", "#FFFFBF", "#FFFFBF", "#54AEAC", "#BC2249", "#BC2249")
+#year side row
+ysideyearfaecium <-c("#DC494C", "#DC494C", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#9E0142", "#FFFFBF", "#D7EF9B", "#D7EF9B", "#88CFA4", "#88CFA4", "#88CFA4", "#88CFA4", "#88CFA4", "#88CFA4", "#88CFA4", "#88CFA4", "#88CFA4", "#88CFA4", "#88CFA4", "#88CFA4", "#88CFA4", "#88CFA4", "#88CFA4", "#3F96B7", "#3F96B7", "#3F96B7", "#3F96B7", "#3F96B7", "#3F96B7", "#3F96B7", "#3F96B7", "#3F96B7", "#3F96B7", "#3F96B7", "#3F96B7", "#3F96B7", "#3F96B7", "#3F96B7", "#3F96B7", "#3F96B7", "#3F96B7", "#3F96B7", "#3F96B7", "#3F96B7", "#3F96B7", "#3F96B7", "#3F96B7", "#3F96B7", "#3F96B7", "#3F96B7", "#3F96B7", "#3F96B7", "#3F96B7", "#3F96B7", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#FDD380", "#FDD380", "#FDD380", "#FDD380", "#FDD380", "#FDD380", "#FDD380", "#FDD380", "#FDD380", "#FDD380", "#FDD380", "#FDD380", "#FDD380", "#FDD380", "#FDD380", "#FDD380", "#FDD380", "#FDD380", "#FDD380", "#FDD380", "#FDD380", "#FDD380", "#FDD380", "#FDD380", "#FDD380", "#FDD380", "#FDD380", "#FDD380", "#FDD380", "#FDD380", "#FDD380", "#FDD380", "#FDD380", "#FDD380", "#FDD380", "#FDD380", "#FDD380", "#FDD380", "#FDD380", "#FDD380", "#FDD380", "#FDD380", "#FDD380", "#FDD380", "#FDD380", "#FDD380")
+#SNP distance heatmap
+pdf("~/VRE2019/results/SF2.pdf")
+t_faecium_dist_heatmap <- heatmap(t_faecium_dist_mat, Rowv=TRUE, Colv = TRUE, col = spectral, scale = "none", margins=c(5,6), main ="Total Faecium Isolates SNP Distances", RowSideColors = ysiderowsfaecium)
+#max SNP distance
+max(t_faecium_dist_mat)
+dev.off()
+```
+SupFig3A
+```{r}
+
+#Supplementary Figure 3a: Total E. Faecium Isolates Core SNP Tree
+
+spectral <- colorRampPalette(brewer.pal(11, "Spectral"))(9)
+mycols<-c( spectral, "#F8766D", "#00BFC4")
+
+faeciumGub_tree_CORE<-read.tree("~/VRE2019/data/Gubbins/Faecium/all_faecium/all_faecium.node_labelled.final_tree.tre")
+faeciumGub_tree_CORE$tip.label = gsub(".snps.consensus.subs.fa", ".fa", faeciumGub_tree_CORE$tip.label)
+
+labels = get.tree(faeciumGub_tree_CORE)$tip.label
+mlstfaeciumall <-read.table("~/VRE2019/data/totalfaeciummlst2core.tab", sep="\t")
+colnames(mlstfaeciumall) = c("strain", "species", "strain_mlst", "atp", "ddl", "gdh", "purK", "gyd", "ptsS", "adk", "reservoir", "year", "reservoir_year")
+mlstfaeciumall$strain = gsub("/contigs.fa", ".fa", mlstfaeciumall$strain)
+rownames(mlstfaeciumall) = mlstfaeciumall$strain
+mlstfaeciumall$year = as.factor(mlstfaeciumall$year)
+#isolate and reservoir component
+sf3a<-ggtree(faeciumGub_tree_CORE) %<+% mlstfaeciumall + geom_tiplab(size=2, aes(label=strain_mlst, group=reservoir, color=reservoir, show.legend=F), hjust =-0, offset=2) + geom_tippoint(size=2, aes(label=year, group=year, color=year, show.legend=F))+ geom_treescale(x=100000, y=110) + scale_color_manual(values=mycols)
+
+# set up function  
+g_legend<-function(a.gplot){
+    tmp <- ggplot_gtable(ggplot_build(a.gplot))
+    leg <- which(sapply(tmp$grobs, function(x) x$name) == "guide-box")
+    legend <- tmp$grobs[[leg]]
+    return(legend) }
+
+# create legend 1
+
+legend1 <- ggtree(faeciumGub_tree_CORE) %<+% mlstfaeciumall + geom_tiplab(size=2, aes(label=strain_mlst, group=reservoir, color=reservoir), hjust =-0) + geom_treescale(x=100000, y=110) + scale_color_manual(values=mycols) + theme(legend.position="right") + scale_colour_manual(values=mycols[10:11]) + geom_treescale() + theme(legend.text=element_text(size=8),
+          legend.title = element_text(face = "italic", 
+               angle = -0, size = 10))
+
+  
+legend2 <- ggtree(faeciumGub_tree_CORE) %<+% mlstfaeciumall  + geom_tippoint(size=2, aes(label=year, group=year, color=year))+ geom_treescale(x=100000, y=110) + scale_color_manual(values=mycols[1:9]) + theme(legend.position="right") + theme(legend.text=element_text(size=8),
+          legend.title = element_text(face = "italic", 
+               angle = -0, size = 10))
+
+# extract "legends only" from ggplot object
+l1 <- g_legend(legend1) 
+l2 <- g_legend(legend2)
+
+# setup legends grid 
+legend1_grid <- cowplot::plot_grid(l1, align = "v", nrow = 2)
+
+# add second legend to grid, specifying its location 
+legends <- legend1_grid + ggplot2::annotation_custom(grob=l2, ymin=-0.1)
+
+# plot "plots" + "legends" (with legends in between plots) 
+sf_3a<-cowplot::plot_grid(sf3a, legends,ncol = 2, rel_widths = c(0.45, 0.1 ))
+
+```
+SF3B
+```{r}
+#Supplementary Figure 3b: Core Phylogenetic Tree of all E. faecium (w/o outliers ARL09-409, AR98-565)
+newtree<-drop.tip(object = faeciumGub_tree_CORE, tip = "ARL09-409.fa")
+newtree<-drop.tip(object = newtree, tip = "AR98-565.fa")
+spectral <- colorRampPalette(brewer.pal(11, "Spectral"))(8)
+mycols<-c( spectral, "#F8766D", "#00BFC4")
+
+
+sf3b<-ggtree(newtree) %<+% mlstfaeciumall + geom_tiplab(size=2, aes(label=strain_mlst, group=reservoir, color=reservoir, show.legend=F), hjust =-0, offset=2) + geom_tippoint(size=2, aes(label=year, group=year, color=year, show.legend=F))+ geom_treescale(x=0, y=110) + scale_color_manual(values=mycols)
+# legends for 3b
+legend1<-ggtree(newtree) %<+% mlstfaeciumall + geom_tiplab(size=2, aes(label=strain_mlst, group=reservoir, color=reservoir), hjust =-0) + geom_treescale(x=0, y=110) +  theme(legend.position="right") + scale_colour_manual(values=mycols[9:10]) +  theme(legend.text=element_text(size=8),
+          legend.title = element_text(face = "italic", 
+               angle = -0, size = 10))
+
+legend2<-ggtree(newtree) %<+% mlstfaeciumall + geom_tippoint(size=2, aes(label=year, group=year, color=year)) + geom_treescale(x=0, y=110) +  theme(legend.position="right") + scale_colour_manual(values=mycols[1:9]) +  theme(legend.text=element_text(size=8),
+          legend.title = element_text(face = "italic", 
+               angle = -0, size = 10))
+
+# extract "legends only" from ggplot object
+l1 <- g_legend(legend1) 
+l2 <- g_legend(legend2)
+
+# setup legends grid 
+legend1_grid <- cowplot::plot_grid(l1, align = "v", nrow = 2)
+
+# add second legend to grid, specifying its location 
+legends <- legend1_grid + ggplot2::annotation_custom(grob=l2, ymin=-0.1)
+
+# plot "plots" + "legends" (with legends in between plots) 
+sf_3b<-cowplot::plot_grid(sf3b, legends,ncol = 2, rel_widths = c(0.45, 0.1 ))
+
+```
+
+Assemble SupFig3
+```{r}
+sf4<-ggarrange(sf_3a, sf_3b, labels=c("A. All E. faecium core SNP tree", "B. E. faecium core SNP tree w/o outliers"), hjust=0)
+ggsave("~/VRE2019/results/SF3.pdf", width = 10, height = 8)
+```
+Supplementary Figure 4a: Core Phylogenetic Tree of all E. faecalis 
+```{r}
+spectral <- colorRampPalette(brewer.pal(11, "Spectral"))(8)
+mycols<-c( spectral[1:7], "#F8766D", "#00BFC4", spectral[8])
+core_total_faecalis <-read.tree("~/VRE2019/data/Gubbins/Faecalis/All_Strains/all_faecalis.node_labelled.final_tree.tre")
+core_total_faecalis$tip.label = gsub(".snps.consensus.subs.fa", ".fa", core_total_faecalis$tip.label)
+labels = get.tree(core_total_faecalis)$tip.label
+mlst_all_faecalis_core <-read.table("~/VRE2019/data/totalfaecalismlst2core.tab", sep="\t")
+colnames(mlst_all_faecalis_core) = c("strain", "species", "strain_mlst", "atp", "ddl", "gdh", "purK", "gyd", "ptsS", "adk", "reservoir", "year", "reservoir_year")
+mlst_all_faecalis_core$strain = gsub("/contigs.fa", ".fa", mlst_all_faecalis_core$strain)
+rownames(mlst_all_faecalis_core) = mlst_all_faecalis_core$strain
+#strain and reservoir component
+mlst_all_faecalis_core$year = as.factor(mlst_all_faecalis_core$year)
+
+r<-ggtree(core_total_faecalis) %<+% mlst_all_faecalis_core + geom_tiplab(size=2, aes(label=strain_mlst, color=reservoir, group=reservoir, show.legend=F), hjust =-0, offset=2)   + geom_treescale(x=0, y=110) + geom_tippoint(size=2, aes(label=year, group=year, color=year, show.legend=F)) + scale_colour_manual(values=mycols) 
+
+# set up function  
+g_legend<-function(a.gplot){
+    tmp <- ggplot_gtable(ggplot_build(a.gplot))
+    leg <- which(sapply(tmp$grobs, function(x) x$name) == "guide-box")
+    legend <- tmp$grobs[[leg]]
+    return(legend) }
+
+# create legend 1
+
+legend1 <- ggtree(core_total_faecalis) %<+% mlst_all_faecalis_core + geom_tiplab(aes(label=strain_mlst, color=reservoir)) + theme(legend.position="right") + scale_colour_manual(values=mycols[8:10]) + geom_treescale() + theme(legend.text=element_text(size=8),
+          legend.title = element_text(face = "italic", 
+               angle = -0, size = 10))
+
+  
+legend2 <- ggtree(core_total_faecalis) %<+% mlst_all_faecalis_core + geom_tippoint(size=2, aes(label=year, group=year, color=year)) + theme(legend.position="right") + scale_colour_manual(values=mycols[1:7]) + geom_treescale() + theme(legend.text=element_text(size=8),
+          legend.title = element_text(face = "italic", 
+               angle = -0, size = 10))
+
+# extract "legends only" from ggplot object
+legend1 <- g_legend(legend1) 
+legend2 <- g_legend(legend2)
+
+# setup legends grid 
+legend1_grid <- cowplot::plot_grid(legend1, align = "v", nrow = 2)
+
+# add second legend to grid, specifying its location 
+legends <- legend1_grid + ggplot2::annotation_custom(grob=legend2, ymin=-0.1)
+
+# plot "plots" + "legends" (with legends in between plots) 
+sf4a<-cowplot::plot_grid(r, legends,ncol = 2, rel_widths = c(0.45, 0.1 ))
+
+#ggsave("~/VRE2019/results/SF4A.pdf", width = 8, height = 10)
+
+```
+
+```{r}
+spectral <- colorRampPalette(brewer.pal(11, "Spectral"))(8)
+mycols<-c( spectral[1:7], "#F8766D", "#00BFC4", spectral[8])
+
+
+faecalis108_tree_CORE<-read.tree("~/VRE2019/data/Gubbins/Faecalis/MLST108/all.node_labelled.final_tree.tre")
+faecalis108_tree_CORE$tip.label[1] = "AR01_DG.fa"
+labels = get.tree(faecalis108_tree_CORE)$tip.label
+mlstfaecalisCORE108<-read.table("~/VRE2019/data/108pacbiorefmlst2core.tab", sep="\t")
+colnames(mlstfaecalisCORE108) = c("strain", "species", "strain_mlst", "atp", "gyr", "gdh", "pur", "aro", "pts", "adk", "reservoir", "isolate", "year")
+mlstfaecalisCORE108$strain = gsub("/contigs.fa", ".fa", mlstfaecalisCORE108$strain)
+rownames(mlstfaecalisCORE108) = mlstfaecalisCORE108$strain
+#isolate and reservoir component
+r<-ggtree(faecalis108_tree_CORE) %<+% mlstfaecalisCORE108 + geom_tiplab(size=2, aes(label=isolate, color=reservoir, show.legend=F), hjust =-0, offset=1) + geom_tippoint(size=2, aes(label=year, group=year, color=year, show.legend=F))
+r<-r + scale_colour_manual(values=mycols) + geom_treescale(x=0, y=110)
+
+# set up function  
+g_legend<-function(a.gplot){
+    tmp <- ggplot_gtable(ggplot_build(a.gplot))
+    leg <- which(sapply(tmp$grobs, function(x) x$name) == "guide-box")
+    legend <- tmp$grobs[[leg]]
+    return(legend) }
+
+# create legend 1
+
+legend1 <- ggtree(faecalis108_tree_CORE) %<+% mlstfaecalisCORE108 + geom_tiplab(aes(label=isolate, color=reservoir)) + ggtitle("Core E faecalis 108") + theme(legend.position="right") + scale_colour_manual(values=mycols[8:10]) + geom_treescale() + theme(legend.text=element_text(size=8),
+          legend.title = element_text(face = "italic", 
+               angle = -0, size = 10))
+
+  
+legend2 <- ggtree(faecalis108_tree_CORE) %<+% mlstfaecalisCORE108 + geom_tippoint(size=2, aes(label=year, group=year, color=year)) + theme(legend.position="right") + scale_colour_manual(values=mycols[1:7]) + geom_treescale() + theme(legend.text=element_text(size=8),
+          legend.title = element_text(face = "italic", 
+               angle = -0, size = 10))
+
+# extract "legends only" from ggplot object
+legend1 <- g_legend(legend1) 
+legend2 <- g_legend(legend2)
+
+# setup legends grid 
+legend1_grid <- cowplot::plot_grid(legend1, align = "v", nrow = 2)
+
+# add second legend to grid, specifying its location 
+legends <- legend1_grid + ggplot2::annotation_custom(grob=legend2, ymin=-0.1)
+
+# plot "plots" + "legends" (with legends in between plots) 
+sf4b<-cowplot::plot_grid(r, legends,ncol = 2, rel_widths = c(0.45, 0.1 ))
+
+#ggsave("~/VRE2019/results/SF4B.pdf", width = 8, height = 10)
+
+```
+
+
+Assemble SupFig4
+```{r}
+sf4<-ggarrange(sf4a, sf4b, labels=c("A. All E. faecalis core SNP tree", "B. E. faecalis MLST108 core SNP tree"), hjust=0)
+ggsave("~/VRE2019/results/SF4.pdf", width = 10, height = 8)
+```
+Sup Fig 5: BactDating : This takes quite a while to run. Used nbIts = 2e7 for paper publication calcuations. Use nbIts = 1e4 for code tidying. 
+```{r}
+# Apply bact dating to faecium isolates
+
+# load tree
+faeciumGub_tree_CORE<-read.tree("~/VRE2019/data/Gubbins/Faecium/all_faecium/all_faecium.final_tree.tre")
+faeciumGub_tree_CORE$tip.label= gsub(".snps.consensus.subs.fa", ".fa", faeciumGub_tree_CORE$tip.label)
+labels = get.tree(faeciumGub_tree_CORE)$tip.label
+# load metadata and tidy
+mlstfaeciumall <-read.table("~/VRE2019/data/totalfaeciummlst2core.tab", sep="\t")
+colnames(mlstfaeciumall) = c("strain", "species", "strain_mlst", "atp", "ddl", "gdh", "purK", "gyd", "ptsS", "adk", "reservoir", "year", "reservoir_year")
+mlstfaeciumall$strain = gsub("/contigs.fa", ".fa", mlstfaeciumall$strain)
+rownames(mlstfaeciumall) = mlstfaeciumall$strain
+
+#subset only faecium metadata for analysis
+keep<-match(labels, rownames(mlstfaeciumall))
+kept<-mlstfaeciumall[keep,]
+
+#calculate 
+res1=roottotip(faeciumGub_tree_CORE, kept$year)
+res1=bactdate(faeciumGub_tree_CORE, kept$year, nbIts = 2e7)
+#res1=bactdate(faeciumGub_tree_CORE, kept$year, nbIts = 1e4)
+
+plot(res1,'trace')
+mcmc=as.mcmc(res1)
+effectiveSize(mcmc)
+plot(res1, 'treeCI', cex=0.5)
+nodelabels(round(nodeDates(res1$tree)), frame="none", adj = c(1.2, 1), cex=0.5)
+#plot(res1,'treeRoot')
+
+#Apply bact dating to faecalis isolates
+# load tree
+tree<-read.tree("~/VRE2019/data/Gubbins/Faecalis/All_Strains/all_faecalis.final_tree.tre")
+tree$tip.label= gsub(".snps.consensus.subs.fa", ".fa", tree$tip.label)
+labels = get.tree(tree)$tip.label
+# load metadata and tidy
+mlst <-read.table("~/VRE2019/data/totalfaecalismlst2core.tab", sep="\t")
+colnames(mlst) = c("strain", "species", "strain_mlst", "atp", "ddl", "gdh", "purK", "gyd", "ptsS", "adk", "reservoir", "year", "reservoir_year")
+mlst$strain = gsub("/contigs.fa", ".fa", mlst$strain)
+rownames(mlst) = mlst$strain
+
+#subset only faecium metadata for analysis
+keep<-match(labels, rownames(mlst))
+kept<-mlst[keep,]
+
+#calculate 
+res=roottotip(tree, kept$year)
+res=bactdate(tree, kept$year, nbIts = 2e7)
+#res=bactdate(tree, kept$year, nbIts = 1e4)
+
+plot(res,'trace')
+mcmc=as.mcmc(res)
+effectiveSize(mcmc)
+
+plot(res, 'treeCI', cex=0.5)
+nodelabels(round(nodeDates(res$tree)), frame="none", adj = c(1.2, 1), cex=0.5)
+#plot(res,'treeRoot')
+
+# Visualize results of ST108 with ggtree
+a<-res$tree
+a<-as_tibble(a)
+ci_data<-data.frame(res$CI)
+ci_data<-cbind(ci_data, rownames(ci_data))
+colnames(ci_data) = c("low", "high", "node")
+a$node = as.factor(a$node)
+faecalis_with_data<-full_join(a, ci_data, by="node")
+reservoir=c(1:225)
+reservoir[114:225] = NA
+reservoir[1:113] = as.character(kept$reservoir)
+factor(reservoir)
+faecalis_with_data$reservoir = reservoir
+write.csv(faecalis_with_data, "~/VRE2019/results/SupTable2A.csv")
+p = ggtree(res$tree, ladderize=F, mrsd = "2008-01-01")  + coord_cartesian(xlim=c(1950, 2010), ylim=c(15, 113)) + theme_tree2() + geom_hilight(node=195) + geom_hilight(node=146, alpha=0.2) + geom_hilight(node=155) + geom_hilight(node=166) + geom_hilight(node=175) 
+q<-p %<+% faecalis_with_data + geom_tippoint(aes(colour=reservoir)) + geom_vline(xintercept = 1970, lty="dashed") + geom_vline(xintercept = 1980, lty="dashed") + geom_vline(xintercept = 1990, lty="dashed") + geom_vline(xintercept = 2000, lty="dashed") + geom_cladelabel(node=175, label="1993-1999", offset=-38) + geom_cladelabel(node=155, label="1989-1996", offset=-35) + geom_cladelabel(node=166, label="1993-1999", offset=-37)+ geom_cladelabel(node=195, label="1992-1995", offset=-33) + geom_cladelabel(node=146, label="1987-1993", offset=-36)
+
+q<-q + theme(legend.position = c(0.1,0.1), legend.title = element_blank(), legend.key = element_blank()) 
+ggsave("~/VRE2019/results/SF5.pdf", width = 10, height = 8)
+
+mlstfaeciumall <-read.table("~/VRE/data/data_for_bayes/totalfaeciummlst2core.tab", sep="\t")
+colnames(mlstfaeciumall) = c("strain", "species", "strain_mlst", "atp", "ddl", "gdh", "purK", "gyd", "ptsS", "adk", "reservoir", "year", "reservoir_year")
+mlstfaeciumall$strain = gsub("/contigs.fa", ".fa", mlstfaeciumall$strain)
+rownames(mlstfaeciumall) = mlstfaeciumall$strain
+
+#subset only faecium metadata for analysis
+keep<-match(labels, rownames(mlstfaeciumall))
+kept<-mlstfaeciumall[keep,]
+
+a<-res1$tree
+a<-as_tibble(a)
+
+
+ci_data<-data.frame(res1$CI)
+ci_data<-cbind(ci_data, rownames(ci_data))
+colnames(ci_data) = c("low", "high", "node")
+a$node = as.factor(a$node)
+faecium_with_data<-full_join(a, ci_data, by="node")
+reservoir=c(1:231)
+reservoir[117:231] = NA
+reservoir[1:116] = as.character(kept$reservoir)
+factor(reservoir)
+faecium_with_data$reservoir = reservoir
+write.csv(faecium_with_data, "~/VRE2019/results/SupTable2B.csv")
+
+```
+
+calculate tajima's d
+```{r}
+faecalis<-read.FASTA("~/VRE2019/data/Gubbins/Faecalis/All_Strains/all_faecalis.filtered_polymorphic_sites.fasta")
+faecium<-read.FASTA("~/VRE2019/data/Gubbins/Faecium/all_faecium/all_faecium.filtered_polymorphic_sites.fasta")
+tajima.test(faecium)
+tajima.test(faecalis)
+```
+Sup Fig 6
+```{r}
+pan<-read.table("~/VRE2019/data/ST108_gene_presence_absence.Rtab", header=TRUE, row.names=1)
+pan$sum<-apply(pan[1:104], 1, sum)
+pan$frac = pan$sum/104
+chromosomal=subset(pan, pan$dog_chr1 > 0)
+plasmid=subset(pan, pan$dog_chr1<1)
+
+pan$Kind <- ifelse(pan$dog_chr1 > 0 , c("Chromosomal"),
+ ifelse(pan$plasmid > 0, c("Plasmid"), c("Unknown")) )
+
+ggplot(pan, aes(frac, fill=Kind)) + geom_histogram(bins=10)
+ggplot(pan, aes(frac, fill=Kind, color=Kind)) + geom_histogram(bins=10) + facet_wrap(~Kind)
+ggplot(pan, aes(frac, fill=Kind, color=Kind)) + geom_histogram(bins=10) + facet_wrap(~Kind, scales="free_y") + theme(text = element_text(size = 14), axis.text.x = element_text(angle = 90, hjust = 1),  legend.position="bottom") + ylab("fraction of isolates") 
+ggsave("~/VRE2019/results/SF6.pdf", plot = last_plot(), scale = 1,
+  dpi = 300, limitsize = TRUE)
+```
+
+Sup Fig 8
+```{r}
+spectral <- colorRampPalette(brewer.pal(11, "Spectral"))(100)
+unidentified_resistomes <- read.csv(file = "~/VRE2019/data/unidentifiedresistome.csv", header = TRUE, row.names =1)
+unidentified_resistomes_mat <- data.matrix(unidentified_resistomes)
+#reservoir side column
+ysidereservoirunidentified <- c("#54AEAC", "#E95D47")
+#resistome heatmap (red=absent, blue=present)
+pdf("~/VRE2019/results/SF8.pdf")
+unidentified_resistomes_heatmap <- heatmap(unidentified_resistomes_mat, Rowv=TRUE, Colv = NA, col = spectral, scale = "none", margins=c(5,6), main ="Unidentified Species Resistomes", cexCol = 1, cexRow = 1, RowSideColors = ysidereservoirunidentified)
+dev.off()
+```
+
+SF9
+```{r}
+#SF9A: faecalis BCR genes
+pigr <- colorRampPalette(brewer.pal(11, "PiYG"))(100)
+faecalis_bcrABRD <- read.csv(file = "~/VRE2019/data/Faecalis_BcrABRD_Clusters_New.csv", header = TRUE, row.names =1)
+faecalis_bcrABRD_mat <- data.matrix(faecalis_bcrABRD)
+#reservoir side row
+ysidereservoirfaecalis <- c("#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142")
+#strain side row
+ysiderowsfaecalis <- c("#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#FFFFBF", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#9E0142", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#5E4FA2", "#F88D51", "#88CFA4", "#FFFFBF", "#5E4FA2", "#FFFFBF", "#F88D51", "#5E4FA2", "#88CFA4", "#88CFA4", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51")
+#year side column
+ysideyearfaecalis <-c("#FFFFBF", "#FFFFBF", "#FFFFBF", "#FFFFBF", "#FFFFBF", "#FFFFBF", "#FFFFBF", "#FFFFBF", "#FFFFBF", "#FFFFBF", "#FFFFBF", "#FFFFBF", "#FFFFBF", "#FFFFBF", "#FFFFBF", "#FFFFBF", "#FFFFBF", "#FFFFBF", "#FFFFBF", "#FFFFBF", "#FFFFBF", "#FFFFBF", "#FFFFBF", "#FFFFBF", "#FFFFBF", "#FFFFBF", "#FFFFBF", "#FFFFBF", "#FFFFBF", "#FFFFBF", "#FFFFBF", "#FFFFBF", "#FFFFBF", "#FFFFBF", "#FFFFBF", "#FFFFBF", "#FFFFBF", "#FFFFBF", "#FFFFBF", "#FFFFBF", "#FFFFBF", "#FFFFBF", "#FFFFBF", "#FFFFBF", "#FDBE6E", "#FDBE6E", "#FDBE6E", "#FDBE6E", "#FDBE6E", "#FDBE6E", "#FDBE6E", "#FDBE6E", "#FDBE6E", "#FDBE6E", "#FDBE6E", "#FDBE6E", "#FDBE6E", "#FDBE6E", "#FDBE6E", "#FDBE6E", "#FDBE6E", "#FDBE6E", "#FFFFBF", "#FFFFBF", "#FFFFBF", "#FFFFBF", "#FFFFBF", "#9E0142", "#E95D47", "#E95D47", "#E95D47", "#E95D47", "#54AEAC", "#54AEAC", "#5E4FA2", "#FFFFBF", "#FFFFBF", "#BEE5A0", "#BEE5A0", "#BEE5A0", "#BEE5A0", "#BEE5A0", "#BEE5A0", "#BEE5A0", "#BEE5A0", "#BEE5A0", "#BEE5A0", "#BEE5A0", "#BEE5A0", "#BEE5A0", "#BEE5A0", "#BEE5A0", "#BEE5A0", "#BEE5A0", "#BEE5A0", "#BEE5A0", "#BEE5A0", "#BEE5A0", "#BEE5A0", "#BEE5A0", "#BEE5A0", "#BEE5A0", "#BEE5A0", "#BEE5A0", "#BEE5A0", "#BEE5A0", "#BEE5A0", "#BEE5A0", "#BEE5A0", "#BEE5A0", "#BEE5A0", "#BEE5A0", "#BEE5A0")
+#bacitracin resistance gene heatmap (pink=absent, green=present)
+pdf("~/VRE2019/results/SF9A.pdf")
+faecalis_bcrABRD_heatmap <- heatmap(faecalis_bcrABRD_mat, Rowv=TRUE, Colv = NA, col = spectral, scale = "none", margins=c(5,6), main ="Faecalis BcrABRD Clusters", cexCol = 2, RowSideColors = ysideyearfaecalis)
+dev.off()
+#Supplementary Figure 9b: E. faecium Bacitracin Resistance Gene Cluster Presence/Absence Heatmap
+
+pigr <- colorRampPalette(brewer.pal(11, "PiYG"))(100)
+faecium_bcrABRD <- read.csv(file = "~/VRE2019/data/Faecium_BcrABRD_Clusters_New.csv", header = TRUE, row.names =1)
+faecium_bcrABRD_mat <- data.matrix(faecium_bcrABRD)
+#reservoir side row
+ysidereservoirfaecium <- c("#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142")
+#strain side row
+ysiderowsfaecium <- c("#9E0142", "#9E0142", "#9E0142", "#9E0142", "#BEE5A0", "#E95D47", "#9E0142", "#9E0142", "#BEE5A0", "#9E0142", "#BEE5A0", "#FB9F5A", "#FEEDA2", "#FDBE6E", "#9BD7A4", "#9BD7A4", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#FDBE6E", "#FDBE6E", "#FDBE6E", "#FDBE6E", "#9BD7A4", "#FDBE6E", "#9BD7A4", "#FDBE6E", "#FDBE6E", "#9BD7A4", "#9BD7A4", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#FDBE6E", "#FDBE6E", "#FDBE6E", "#FDBE6E", "#FDDA86", "#9BD7A4", "#FDDA86", "#F1F9A9", "#FDDA86", "#456EB1", "#9BD7A4", "#9BD7A4", "#9E0142", "#F67B49", "#9E0142", "#75C8A4", "#9E0142", "#FFFFBF", "#9E0142", "#378EBA", "#54AEAC", "#DFF299", "#DFF299", "#DFF299", "#9E0142", "#9E0142", "#DFF299", "#9E0142", "#9E0142", "#E95D47", "#9E0142", "#BC2249", "#BEE5A0", "#FFFFBF", "#E95D47", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#9E0142", "#BC2249", "#FFFFBF", "#FFFFBF", "#9E0142", "#9E0142", "#BEE5A0", "#9E0142", "#D8434D", "#378EBA", "#D8434D", "#FFFFBF", "#FFFFBF", "#54AEAC", "#BC2249", "#BC2249")
+#year side row
+ysideyearfaecium <-c("#DC494C", "#DC494C", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#F88D51", "#9E0142", "#FFFFBF", "#D7EF9B", "#D7EF9B", "#88CFA4", "#88CFA4", "#88CFA4", "#88CFA4", "#88CFA4", "#88CFA4", "#88CFA4", "#88CFA4", "#88CFA4", "#88CFA4", "#88CFA4", "#88CFA4", "#88CFA4", "#88CFA4", "#88CFA4", "#3F96B7", "#3F96B7", "#3F96B7", "#3F96B7", "#3F96B7", "#3F96B7", "#3F96B7", "#3F96B7", "#3F96B7", "#3F96B7", "#3F96B7", "#3F96B7", "#3F96B7", "#3F96B7", "#3F96B7", "#3F96B7", "#3F96B7", "#3F96B7", "#3F96B7", "#3F96B7", "#3F96B7", "#3F96B7", "#3F96B7", "#3F96B7", "#3F96B7", "#3F96B7", "#3F96B7", "#3F96B7", "#3F96B7", "#3F96B7", "#3F96B7", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#5E4FA2", "#FDD380", "#FDD380", "#FDD380", "#FDD380", "#FDD380", "#FDD380", "#FDD380", "#FDD380", "#FDD380", "#FDD380", "#FDD380", "#FDD380", "#FDD380", "#FDD380", "#FDD380", "#FDD380", "#FDD380", "#FDD380", "#FDD380", "#FDD380", "#FDD380", "#FDD380", "#FDD380", "#FDD380", "#FDD380", "#FDD380", "#FDD380", "#FDD380", "#FDD380", "#FDD380", "#FDD380", "#FDD380", "#FDD380", "#FDD380", "#FDD380", "#FDD380", "#FDD380", "#FDD380", "#FDD380", "#FDD380", "#FDD380", "#FDD380", "#FDD380", "#FDD380", "#FDD380", "#FDD380")
+#bacitracin resistance gene heatmap (pink=absent, green=present)
+pdf("~/VRE2019/results/SF9B.pdf")
+faecium_bcrABRD_heatmap <- heatmap(faecium_bcrABRD_mat, Rowv=TRUE, Colv = NA, col = spectral, scale = "none", margins=c(5,6), main ="Faecium BcrABRD Clusters", cexCol = 2, RowSideColors = ysideyearfaecium)
+dev.off()
+```
+
+SF10: plasmid & chromosomal conservation
+
+```{r}
+library(ggbio)
+foo<-read.table("~/VRE2019/data/bar2.bed")
+
+#split all chromosomes into list of chromosomes
+colnames(foo) = c("strain", "chr", "start", "stop", "bool")
+chromosomes<-split(foo, foo$chr)
+
+lengths <- function(x)
+{
+  a <- subset(x, x$V5 > 0)
+  return(length(a$V5))
+}
+
+mykeep2<-c("chr", "start", "stop", "deep", "mean")
+for (j in 1:length(chromosomes))
+{  
+#split each chromosome into a list of the intervals in the chromosome  
+ pieces1<-split(chromosomes[[j]], chromosomes[[j]]$start)
+#for each set of intervals
+ for (i in (1:length(pieces1))) 
+{
+  interval<-pieces1[[i]]
+    #calculate how many unique species have hte interval
+  #len<-length(unique(interval$strain))
+  s<-subset(interval, interval$bool == 1)
+  len<-length(unique(s$strain))
+  
+  #num unique species without interval
+  t<-subset(interval, interval$bool == 0)
+  len2<-length(unique(t$strain))
+  
+  #coverage depth
+  u<-sum(interval$bool)
+  
+  presence <-len / (len + len2)
+  coverage <- u / len
+  
+tobind<-c(as.character(pieces1[[i]][1,2]), as.numeric(pieces1[[i]][1,3:4]),coverage, presence)
+  
+  
+  mykeep2<-rbind(mykeep2, tobind)
+}
+}
+
+mykeep<-tail(mykeep2,-1)
+colnames(mykeep) = c("Chromosome", "chromStart", "chromEnd", "GC", "meanDepth")
+mykeep<-as.data.frame(mykeep)
+
+# plot cumulative density of plasmid regions 
+chrs<-split(mykeep, mykeep$Chromosome)
+par(mfrow=c(3, 2))
+for (k in 1:length(chrs))
+{
+depth<-as.numeric(as.character(chrs[[k]]$meanDepth))
+breaks<-seq(0, 1, by=0.05)
+depth.cut<-cut(depth, breaks, right=TRUE, include.lowest=TRUE)
+depth.freq<-table(depth.cut)
+cumfreq<-c(0, cumsum(depth.freq))
+cumfreq2<-cumfreq/sum(depth.freq)
+plot((1 - cumfreq2), breaks, main=chrs[[k]]$Chromosome[1], xlab="Cumulative fraction of regions on genomic element", ylab="Cumulative fraction of MLST 108 strains present ")
+lines((1-cumfreq2), breaks)
+}
+
+
+
+# plot spatial conservation of plasmid regions
+chrs<-split(mykeep, mykeep$Chromosome)
+par(mfrow=c(3, 2))
+for (k in 1:length(chrs))
+{
+depth<-as.numeric(as.character(chrs[[k]]$meanDepth))
+x<-as.numeric(as.character(chrs[[k]]$chromStart))
+plot(x, depth, main=chrs[[k]]$Chromosome[1], xlab="genetic element position", ylab="Fraction of MLST 108 isolates containing this 1kb element")
+lines(x, depth)
+}
+
+mykeep$chromStart = as.numeric(as.character(mykeep$chromStart))
+mykeep$meanDepth = as.numeric(as.character(mykeep$meanDepth))
+
+mykeep$Chromosome = gsub("DG_Core_0001_", "Chromosome", mykeep$Chromosome)
+mykeep$Chromosome = gsub("DG_00004", "pAR01.3", mykeep$Chromosome)
+mykeep$Chromosome = gsub("DG_00005", "pAR01.1", mykeep$Chromosome)
+mykeep$Chromosome = gsub("DG_00006_", "pAR01.2", mykeep$Chromosome)
+mykeep$Chromosome = gsub("DG_00007", "pAR01.4", mykeep$Chromosome)
+
+
+
+a<-ggplot(data=mykeep, aes(x = chromStart, y = meanDepth, colour=Chromosome)) + geom_point() + geom_line() + facet_grid(~Chromosome, scales="free")
+a <- a + scale_y_continuous(limits = c(0, 1)) + theme(text=element_text(size=14, face="bold"), axis.text.x = element_text(angle = 90, hjust = 1)) +  labs(y = "Fraction strains containing region", x="Genomic region") 
+a
+
+
+
+b<-ggplot(mykeep, aes(meanDepth, colour=Chromosome)) + geom_line(aes(y=1 - ..y..), stat='ecdf') +
+    labs(y = "1 kb regions present on element", x="Strains with \n element present") + theme(text=element_text(size=14, face="bold"), axis.text.x = element_text(angle = 90, hjust = 1))
+
+c<-ggarrange(a, b, ncol=2, nrow=1 , widths=c(3.5, 1), common.legend=TRUE, legend=c("top"), labels=c("A", "B")) 
+
+ggsave("~/VRE2019/results/SF10.pdf", plot = last_plot(), scale = 1, height=8, width=10,
+  dpi = 300)
+```  
+SF11: pyani comparisons
+```{r}
+faecium<-read.table("~/VRE2019/data/pyani/faecium/ANIb_percentage_identity.tab", sep="\t", head=TRUE, row.names=1)
+
+
+#faecalis<-read.table("~/VRE/results/ANI/faecalis/pyani_withref/ANIb_percentage_identity.tab", sep="\t", head=TRUE)
+
+faecium$bug1 = rownames(faecium)
+melted_cormat1 <- melt(faecium)
+  
+melted_cormat1$bug1<-gsub("scaffolds", "", melted_cormat1$bug1)
+melted_cormat1$variable<-gsub("scaffolds", "", melted_cormat1$variable)
+
+
+a<-melted_cormat1 %>% filter(bug1 == "E_faecium_reference_sequence")
+
+a$variable<-gsub("E_faecium_reference_sequence", "E_faecium_E1", a$variable)
+
+ggplot(a, aes(x=reorder(variable, -value), y=value)) + geom_point()  +     theme(axis.text.x = element_text(angle=90, hjust=TRUE, size=6)) + geom_hline(yintercept = 0.95, colour="red", linetype="dashed") + ylab("ANI to E. faecium reference genome") + xlab("Isolate") + geom_vline(xintercept=117, linetype="dashed", colour="blue")
+
+ggsave("~/VRE2019/results/SF11B.pdf", plot = last_plot(), scale = 1, height=8, width=10,
+  dpi = 300)
+
+faecalis<-read.table("~/VRE2019/data/pyani/faecalis/ANIb_percentage_identity.tab", sep="\t", head=TRUE, row.names=1)
+
+faecalis$bug1 = rownames(faecalis)
+melted_cormat1 <- melt(faecalis)
+  
+melted_cormat1$bug1<-gsub("scaffolds", "", melted_cormat1$bug1)
+melted_cormat1$variable<-gsub("scaffolds", "", melted_cormat1$variable)
+
+
+a<-melted_cormat1 %>% filter(bug1 == "E_faecalis_reference_sequence")
+
+a$variable<-gsub("E_faecalis_reference_sequence", "E_faecalis_CLB21560", a$variable)
+
+ggplot(a, aes(x=reorder(variable, -value), y=value)) + geom_point()  +     theme(axis.text.x = element_text(angle=90, hjust=TRUE, size=6)) + geom_hline(yintercept = 0.95, colour="red", linetype="dashed") + ylab("ANI to E. faecalis reference genome") + xlab("Isolate") + geom_vline(xintercept=113, linetype="dashed", colour="blue")
+
+ggsave("~/VRE2019/results/SF11A.pdf", plot = last_plot(), scale = 1, height=8, width=10,
+  dpi = 300)
+```

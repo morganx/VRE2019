@@ -1,0 +1,217 @@
+#NEXUS
+begin taxa;
+	dimensions ntax=115;
+	taxlabels
+	'07-03-81.snps.consensus.subs.fa'
+	'07-11-07.snps.consensus.subs.fa'
+	'10-2A.snps.consensus.subs.fa'
+	'10-9A.snps.consensus.subs.fa'
+	'11-8A.snps.consensus.subs.fa'
+	'12-3VP.snps.consensus.subs.fa'
+	'12-5VP.snps.consensus.subs.fa'
+	'12-6VP.snps.consensus.subs.fa'
+	'12-7VP.snps.consensus.subs.fa'
+	'12-8VP.snps.consensus.subs.fa'
+	'12-9VP.snps.consensus.subs.fa'
+	'AR01-139.snps.consensus.subs.fa'
+	'AR98-565.snps.consensus.subs.fa'
+	'ARL04-840.snps.consensus.subs.fa'
+	'ARL05-425.snps.consensus.subs.fa'
+	'ARL05-67.snps.consensus.subs.fa'
+	'ARL07-1139.snps.consensus.subs.fa'
+	'ARL07-1163.snps.consensus.subs.fa'
+	'ARL07-1166.snps.consensus.subs.fa'
+	'ARL07-1169.snps.consensus.subs.fa'
+	'ARL07-1195.snps.consensus.subs.fa'
+	'ARL07-1198.snps.consensus.subs.fa'
+	'ARL07-1205.snps.consensus.subs.fa'
+	'ARL07-1286.snps.consensus.subs.fa'
+	'ARL07-1300.snps.consensus.subs.fa'
+	'ARL07-1328.snps.consensus.subs.fa'
+	'ARL07-1345.snps.consensus.subs.fa'
+	'ARL07-1348.snps.consensus.subs.fa'
+	'ARL07-1351.snps.consensus.subs.fa'
+	'ARL07-1384.snps.consensus.subs.fa'
+	'ARL07-973.snps.consensus.subs.fa'
+	'ARL08-105.snps.consensus.subs.fa'
+	'ARL08-1074.snps.consensus.subs.fa'
+	'ARL08-1077.snps.consensus.subs.fa'
+	'ARL08-1189.snps.consensus.subs.fa'
+	'ARL08-1215.snps.consensus.subs.fa'
+	'ARL08-1218.snps.consensus.subs.fa'
+	'ARL08-1249.snps.consensus.subs.fa'
+	'ARL08-1256.snps.consensus.subs.fa'
+	'ARL08-1292.snps.consensus.subs.fa'
+	'ARL08-1309.snps.consensus.subs.fa'
+	'ARL08-1412.snps.consensus.subs.fa'
+	'ARL08-1437.snps.consensus.subs.fa'
+	'ARL08-288.snps.consensus.subs.fa'
+	'ARL08-32.snps.consensus.subs.fa'
+	'ARL08-339.snps.consensus.subs.fa'
+	'ARL08-35.snps.consensus.subs.fa'
+	'ARL08-39.snps.consensus.subs.fa'
+	'ARL08-391.snps.consensus.subs.fa'
+	'ARL08-394.snps.consensus.subs.fa'
+	'ARL08-428.snps.consensus.subs.fa'
+	'ARL08-43.snps.consensus.subs.fa'
+	'ARL08-46.snps.consensus.subs.fa'
+	'ARL08-477.snps.consensus.subs.fa'
+	'ARL08-484.snps.consensus.subs.fa'
+	'ARL08-552.snps.consensus.subs.fa'
+	'ARL08-67.snps.consensus.subs.fa'
+	'ARL08-712.snps.consensus.subs.fa'
+	'ARL08-781.snps.consensus.subs.fa'
+	'ARL08-804.snps.consensus.subs.fa'
+	'ARL08-902.snps.consensus.subs.fa'
+	'ARL08-983.snps.consensus.subs.fa'
+	'ARL09-100.snps.consensus.subs.fa'
+	'ARL09-1074a.snps.consensus.subs.fa'
+	'ARL09-1209.snps.consensus.subs.fa'
+	'ARL09-1265.snps.consensus.subs.fa'
+	'ARL09-1374.snps.consensus.subs.fa'
+	'ARL09-146.snps.consensus.subs.fa'
+	'ARL09-193.snps.consensus.subs.fa'
+	'IV28.snps.consensus.subs.fa'
+	'TV10.snps.consensus.subs.fa'
+	'TV104.snps.consensus.subs.fa'
+	'TV111.snps.consensus.subs.fa'
+	'TV118.snps.consensus.subs.fa'
+	'TV12.snps.consensus.subs.fa'
+	'TV123.snps.consensus.subs.fa'
+	'TV125.snps.consensus.subs.fa'
+	'TV137.snps.consensus.subs.fa'
+	'TV138.snps.consensus.subs.fa'
+	'TV139.snps.consensus.subs.fa'
+	'TV14.snps.consensus.subs.fa'
+	'TV15.snps.consensus.subs.fa'
+	'TV162.snps.consensus.subs.fa'
+	'TV18.snps.consensus.subs.fa'
+	'TV20.snps.consensus.subs.fa'
+	'TV21.snps.consensus.subs.fa'
+	'TV4.snps.consensus.subs.fa'
+	'TV41.snps.consensus.subs.fa'
+	'TV42.snps.consensus.subs.fa'
+	'TV43.snps.consensus.subs.fa'
+	'TV44.snps.consensus.subs.fa'
+	'TV45.snps.consensus.subs.fa'
+	'TV47.snps.consensus.subs.fa'
+	'TV48.snps.consensus.subs.fa'
+	'TV49.snps.consensus.subs.fa'
+	'TV52.snps.consensus.subs.fa'
+	'TV54.snps.consensus.subs.fa'
+	'TV55.snps.consensus.subs.fa'
+	'TV56.snps.consensus.subs.fa'
+	'TV57.snps.consensus.subs.fa'
+	'TV58.snps.consensus.subs.fa'
+	'TV71.snps.consensus.subs.fa'
+	'TV73.snps.consensus.subs.fa'
+	'TV75.snps.consensus.subs.fa'
+	'TV76.snps.consensus.subs.fa'
+	'TV77.snps.consensus.subs.fa'
+	'TV78.snps.consensus.subs.fa'
+	'TV81.snps.consensus.subs.fa'
+	'TV82.snps.consensus.subs.fa'
+	'TV83.snps.consensus.subs.fa'
+	'TV92.snps.consensus.subs.fa'
+	'TV97.snps.consensus.subs.fa'
+	'TV98.snps.consensus.subs.fa'
+	'VV11.snps.consensus.subs.fa'
+	'VV6.snps.consensus.subs.fa'
+;
+end;
+
+begin trees;
+	tree tree_1 = [&R] (((('ARL08-983.snps.consensus.subs.fa':204.122025,('ARL08-712.snps.consensus.subs.fa':6.589966,(((('ARL08-1189.snps.consensus.subs.fa':2.309731,(('ARL08-902.snps.consensus.subs.fa':6.920066,('ARL08-1074.snps.consensus.subs.fa':11.54218,'ARL08-1077.snps.consensus.subs.fa':3.474819):2.309951):0.081112,'ARL08-1292.snps.consensus.subs.fa':9.239848):3.464715):0.081112,'ARL08-1309.snps.consensus.subs.fa':9.257007):2.831646,'ARL08-781.snps.consensus.subs.fa':6.427863):4.830259,(('ARL08-804.snps.consensus.subs.fa':7.342062,'ARL08-1249.snps.consensus.subs.fa':7.135798):2.758625,'ARL08-1215.snps.consensus.subs.fa':8.089483):3.007328):8.919673):159.334045):84.96859,(('ARL07-1286.snps.consensus.subs.fa':6.871351,(('ARL08-428.snps.consensus.subs.fa':3.374463,((((('ARL07-1205.snps.consensus.subs.fa':3.771819,(('ARL07-1351.snps.consensus.subs.fa':4.535412,('ARL07-973.snps.consensus.subs.fa':2.661895,('ARL07-1348.snps.consensus.subs.fa':10.944633,'ARL07-1345.snps.consensus.subs.fa':3.795698):3.401603):7.543093):3.771954,'ARL08-552.snps.consensus.subs.fa':7.564479):1.133075):4.52347,(('ARL08-339.snps.consensus.subs.fa':5.669826,'ARL08-394.snps.consensus.subs.fa':6.803408):3.401623,('ARL07-1169.snps.consensus.subs.fa':2.266942,('ARL08-391.snps.consensus.subs.fa':5.668365,'ARL08-288.snps.consensus.subs.fa':15.872918):2.266164):1.133525):3.040728):1.133129,('ARL07-1198.snps.consensus.subs.fa':6.028673,'ARL07-1328.snps.consensus.subs.fa':6.442353):2.266951):1.13341,(('ARL08-105.snps.consensus.subs.fa':3.71405,('ARL08-32.snps.consensus.subs.fa':6.189179,('ARL07-1139.snps.consensus.subs.fa':14.53071,('ARL08-39.snps.consensus.subs.fa':4.535414,(('ARL08-477.snps.consensus.subs.fa':6.525472,('ARL08-67.snps.consensus.subs.fa':9.069505,('ARL08-46.snps.consensus.subs.fa':0.081112,'ARL08-35.snps.consensus.subs.fa':6.800078):3.401292):2.286685):3.664005,'ARL08-43.snps.consensus.subs.fa':5.39195):5.947825):1.340228):5.355985):5.733597):9.617102,'ARL07-1166.snps.consensus.subs.fa':5.667739):6.442011):1.469488,('ARL07-1195.snps.consensus.subs.fa':5.643005,(('ARL07-1300.snps.consensus.subs.fa':4.045093,'ARL07-1163.snps.consensus.subs.fa':6.157955):5.694857,'ARL07-1384.snps.consensus.subs.fa':7.265635):5.179099):0.081112):3.402513):3.479063,'ARL08-484.snps.consensus.subs.fa':4.481464):6.809994):177.50296,(('ARL09-1074a.snps.consensus.subs.fa':68.657982,'ARL09-1265.snps.consensus.subs.fa':42.426529):279.346191,(('ARL09-1209.snps.consensus.subs.fa':96.061089,(('ARL09-1374.snps.consensus.subs.fa':21.092672,('ARL09-193.snps.consensus.subs.fa':16.386053,(('ARL09-146.snps.consensus.subs.fa':14.126402,'ARL09-100.snps.consensus.subs.fa':5.883508):13.028768,('ARL08-1437.snps.consensus.subs.fa':9.347013,'ARL08-1412.snps.consensus.subs.fa':7.143788):1.176169):1.184823):2.358256):1.910618,('ARL08-1218.snps.consensus.subs.fa':5.880662,'ARL08-1256.snps.consensus.subs.fa':2.35658):9.956453):35.362244):57.213562,('ARL05-425.snps.consensus.subs.fa':54.052029,'ARL05-67.snps.consensus.subs.fa':25.1005):185.215179):102.681038):45.170918):40.579865):42.787304,('AR01-139.snps.consensus.subs.fa':79.687454,('AR98-565.snps.consensus.subs.fa':104.948715,'ARL04-840.snps.consensus.subs.fa':89.8396):18.031494):56.372078):1859.964966,(('TV57.snps.consensus.subs.fa':456.610077,('TV4.snps.consensus.subs.fa':11.153138,('TV18.snps.consensus.subs.fa':10.721853,'TV52.snps.consensus.subs.fa':14.683703):6.065858):613.05719):227.709229,((('TV48.snps.consensus.subs.fa':608.432739,('TV49.snps.consensus.subs.fa':78.6054,(('TV20.snps.consensus.subs.fa':17.461519,(('TV54.snps.consensus.subs.fa':34.173279,'TV47.snps.consensus.subs.fa':9.336415):12.895191,'TV12.snps.consensus.subs.fa':18.821829):9.061421):14.38026,('TV75.snps.consensus.subs.fa':12.960109,('TV78.snps.consensus.subs.fa':16.934156,'TV76.snps.consensus.subs.fa':10.887314):4.899633):16.917551):43.374168):331.203156):137.410522,('12-3VP.snps.consensus.subs.fa':27.168943,('TV44.snps.consensus.subs.fa':18.51808,'TV21.snps.consensus.subs.fa':18.685583):22.856258):381.285736):95.992691,((('TV55.snps.consensus.subs.fa':60.179726,('TV73.snps.consensus.subs.fa':19.192419,(('TV71.snps.consensus.subs.fa':30.789032,'TV43.snps.consensus.subs.fa':8.280138):6.279469,'TV92.snps.consensus.subs.fa':38.561718):11.76061):59.892666):528.535583,(('IV28.snps.consensus.subs.fa':587.069641,'TV56.snps.consensus.subs.fa':482.108398):134.726685,(((('TV41.snps.consensus.subs.fa':12.200685,(('VV6.snps.consensus.subs.fa':9.668516,'TV58.snps.consensus.subs.fa':11.570602):18.061028,'VV11.snps.consensus.subs.fa':13.162441):11.775945):109.762367,('TV97.snps.consensus.subs.fa':21.10141,'TV118.snps.consensus.subs.fa':4.564234):122.934929):244.117889,(('TV83.snps.consensus.subs.fa':31.262377,(('TV139.snps.consensus.subs.fa':3.428219,('TV137.snps.consensus.subs.fa':9.301156,'TV162.snps.consensus.subs.fa':17.428741):4.219563):2.269803,'TV138.snps.consensus.subs.fa':18.214577):9.313307):300.933044,('TV104.snps.consensus.subs.fa':217.975494,(('12-5VP.snps.consensus.subs.fa':12.899875,('12-8VP.snps.consensus.subs.fa':64.616364,'12-6VP.snps.consensus.subs.fa':22.093054):20.719654):281.948486,(('10-9A.snps.consensus.subs.fa':9.402962,'10-2A.snps.consensus.subs.fa':13.018219):139.350281,'TV15.snps.consensus.subs.fa':204.927277):114.922256):73.589111):92.834167):220.843811):141.471954,'TV45.snps.consensus.subs.fa':443.083679):103.474197):142.364334):79.843483,((('TV81.snps.consensus.subs.fa':448.008789,('TV123.snps.consensus.subs.fa':19.50638,'TV82.snps.consensus.subs.fa':27.682493):341.324829):98.085304,(('TV111.snps.consensus.subs.fa':478.168976,('TV125.snps.consensus.subs.fa':28.364246,'TV98.snps.consensus.subs.fa':22.907875):260.261414):152.658218,(('11-8A.snps.consensus.subs.fa':24.095972,'12-9VP.snps.consensus.subs.fa':37.380642):31.45112,('12-7VP.snps.consensus.subs.fa':15.13839,('TV42.snps.consensus.subs.fa':26.154064,'TV77.snps.consensus.subs.fa':12.87315):19.342777):15.051064):363.378723):109.230545):114.824089,('07-03-81.snps.consensus.subs.fa':46.025375,(('TV14.snps.consensus.subs.fa':19.891762,'TV10.snps.consensus.subs.fa':19.669418):9.94124,'07-11-07.snps.consensus.subs.fa':22.011238):12.440452):476.939972):101.030777):59.143772):58.344128):3316.715332);
+end;
+
+begin figtree;
+	set appearance.backgroundColorAttribute="Default";
+	set appearance.backgroundColour=#ffffff;
+	set appearance.branchColorAttribute="User selection";
+	set appearance.branchColorGradient=false;
+	set appearance.branchLineWidth=1.0;
+	set appearance.branchMinLineWidth=0.0;
+	set appearance.branchWidthAttribute="Fixed";
+	set appearance.foregroundColour=#000000;
+	set appearance.hilightingGradient=false;
+	set appearance.selectionColour=#2d3680;
+	set branchLabels.colorAttribute="User selection";
+	set branchLabels.displayAttribute="Branch times";
+	set branchLabels.fontName="sansserif";
+	set branchLabels.fontSize=8;
+	set branchLabels.fontStyle=0;
+	set branchLabels.isShown=false;
+	set branchLabels.significantDigits=4;
+	set layout.expansion=0;
+	set layout.layoutType="RECTILINEAR";
+	set layout.zoom=0;
+	set legend.attribute=null;
+	set legend.fontSize=10.0;
+	set legend.isShown=false;
+	set legend.significantDigits=4;
+	set nodeBars.barWidth=4.0;
+	set nodeBars.displayAttribute=null;
+	set nodeBars.isShown=false;
+	set nodeLabels.colorAttribute="User selection";
+	set nodeLabels.displayAttribute="Node ages";
+	set nodeLabels.fontName="sansserif";
+	set nodeLabels.fontSize=8;
+	set nodeLabels.fontStyle=0;
+	set nodeLabels.isShown=false;
+	set nodeLabels.significantDigits=4;
+	set nodeShapeExternal.colourAttribute="User selection";
+	set nodeShapeExternal.isShown=false;
+	set nodeShapeExternal.minSize=10.0;
+	set nodeShapeExternal.scaleType=Width;
+	set nodeShapeExternal.shapeType=Circle;
+	set nodeShapeExternal.size=4.0;
+	set nodeShapeExternal.sizeAttribute="Fixed";
+	set nodeShapeInternal.colourAttribute="User selection";
+	set nodeShapeInternal.isShown=false;
+	set nodeShapeInternal.minSize=10.0;
+	set nodeShapeInternal.scaleType=Width;
+	set nodeShapeInternal.shapeType=Circle;
+	set nodeShapeInternal.size=4.0;
+	set nodeShapeInternal.sizeAttribute="Fixed";
+	set polarLayout.alignTipLabels=false;
+	set polarLayout.angularRange=0;
+	set polarLayout.rootAngle=0;
+	set polarLayout.rootLength=100;
+	set polarLayout.showRoot=true;
+	set radialLayout.spread=0.0;
+	set rectilinearLayout.alignTipLabels=false;
+	set rectilinearLayout.curvature=0;
+	set rectilinearLayout.rootLength=100;
+	set scale.offsetAge=0.0;
+	set scale.rootAge=1.0;
+	set scale.scaleFactor=1.0;
+	set scale.scaleRoot=false;
+	set scaleAxis.automaticScale=true;
+	set scaleAxis.fontSize=8.0;
+	set scaleAxis.isShown=false;
+	set scaleAxis.lineWidth=1.0;
+	set scaleAxis.majorTicks=1.0;
+	set scaleAxis.minorTicks=0.5;
+	set scaleAxis.origin=0.0;
+	set scaleAxis.reverseAxis=false;
+	set scaleAxis.showGrid=true;
+	set scaleBar.automaticScale=true;
+	set scaleBar.fontSize=10.0;
+	set scaleBar.isShown=true;
+	set scaleBar.lineWidth=1.0;
+	set scaleBar.scaleRange=0.0;
+	set tipLabels.colorAttribute="User selection";
+	set tipLabels.displayAttribute="Names";
+	set tipLabels.fontName="sansserif";
+	set tipLabels.fontSize=8;
+	set tipLabels.fontStyle=0;
+	set tipLabels.isShown=true;
+	set tipLabels.significantDigits=4;
+	set trees.order=false;
+	set trees.orderType="increasing";
+	set trees.rooting=false;
+	set trees.rootingType="User Selection";
+	set trees.transform=false;
+	set trees.transformType="cladogram";
+end;
+
