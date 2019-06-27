@@ -6,7 +6,9 @@ Agricultural origins of a highly-persistent lineage of vancomycin-resistant Ente
 
 Rowena Rushton-Green, Rachel L Darnell , George Taiaroa, Glen P Carter, Gregory M Cook, Xochitl C Morgan
 
-This manuscript is currently in revision at Applied & Environmental Microbiology.
+This manuscript is published at Applied & Environmental Microbiology:
+https://aem.asm.org/content/85/13/e00137-19
+
 
 Notes:
 
