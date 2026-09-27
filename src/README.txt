@@ -1,6 +1,6 @@
 ## Analysis notes
 
--The R code in Ro-FIgures.RMD contains code to make Figures 1-3 and Supplementary Figures 2-6 and 8-11.  
+-The R code in GenerateFigures.RMD contains code to make Figures 1-3 and Supplementary Figures 2-6 and 8-11.  
 
 -The values for Figure 4 are derived from averages of data provided in Supplementary Table 8 (bp distance between antibiotic resistance genes, average contig length containing multiple antibiotic resistance genes, number and percentage of isolates in subset containing multiple antibiotic resistance genes)
 
