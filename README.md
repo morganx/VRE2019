@@ -7,6 +7,8 @@ Rowena Rushton-Green, Rachel L Darnell , George Taiaroa, Glen P Carter, Gregory 
 
 This manuscript is published in [Applied & Environmental Microbiology](https://aem.asm.org/content/85/13/e00137-19) ([PubMed](https://pubmed.ncbi.nlm.nih.gov/31028029/)). All assemblies are available at NCBI's Sequencing Read Archive (BioProject: PRJNA476469)
 
+The goal of this project was to analyze the genomes of collection of 216 isolates of vancomycin-resistant Enterococcus (E. faecalis and E. faecium). This collection includes clinical and poultry farm isolates. Illumina reads from all isolates were assembled with the Nullarbor pipeline. This code repository includes the R code and shell scripts that were used to generate the figures in the manuscript from the Nullarbor outputs. Analysis and original git repository were performed by Ro Rushton-Green, under the supervision of Xochitl Morgan. 
+
 > **GitHub mirror note:** This repository was originally published in GitLab. This repository contains the complete code and supporting material from the original project except for five generated Gubbins outputs that exceed GitHub's 100 MB per-file limit. The intact archival repository, including those files and the original Git history, remains available on [GitLab](https://gitlab.com/morganx/vre2019).
 
 ## Oversized generated files retained on GitLab
