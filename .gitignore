@@ -1,0 +1,7 @@
+# Generated Gubbins outputs retained in the archival GitLab repository because
+# they exceed GitHub's 100 MB per-file limit.
+data/Gubbins/Faecium/all_faecium/all_faecium.branch_base_reconstruction.embl
+data/Gubbins/Faecalis/All_Strains/all_faecalis.fa.gz
+data/Gubbins/Faecium/all_faecium/all_faecium.fa.gz
+data/Gubbins/Faecium/faecium_no_outliers/all.branch_base_reconstruction.embl
+data/Gubbins/Faecium/faecium_no_outliers/all.fa.gz
