@@ -5,7 +5,7 @@ This repository contains source code and supporting material for the manuscript:
 
 Rowena Rushton-Green, Rachel L Darnell , George Taiaroa, Glen P Carter, Gregory M Cook, Xochitl C Morgan
 
-This manuscript is published in [Applied & Environmental Microbiology](https://aem.asm.org/content/85/13/e00137-19) ([PubMed](https://pubmed.ncbi.nlm.nih.gov/31028029/)).
+This manuscript is published in [Applied & Environmental Microbiology](https://aem.asm.org/content/85/13/e00137-19) ([PubMed](https://pubmed.ncbi.nlm.nih.gov/31028029/)). All assemblies are available at NCBI's Sequencing Read Archive (BioProject: PRJNA476469)
 
 > **GitHub mirror note:** This repository was originally published in GitLab. This repository contains the complete code and supporting material from the original project except for five generated Gubbins outputs that exceed GitHub's 100 MB per-file limit. The intact archival repository, including those files and the original Git history, remains available on [GitLab](https://gitlab.com/morganx/vre2019).
 
