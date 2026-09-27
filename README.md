@@ -5,7 +5,7 @@ This repository contains source code and supporting material for the manuscript:
 
 Rowena Rushton-Green, Rachel L Darnell , George Taiaroa, Glen P Carter, Gregory M Cook, Xochitl C Morgan
 
-This manuscript is published at [https://aem.asm.org/content/85/13/e00137-19](Applied & Environmental Microbiology):
+This manuscript is published in Applied & Environmental Microbiology [https://aem.asm.org/content/85/13/e00137-19]
 
 [https://pubmed.ncbi.nlm.nih.gov/31028029/](Pubmed)
 
