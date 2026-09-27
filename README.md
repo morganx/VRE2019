@@ -1,15 +1,16 @@
 # VRE2019
 
-> **GitHub mirror note:** This repository contains the complete code and supporting material from the original project except for five generated Gubbins outputs that exceed GitHub's 100 MB per-file limit. The intact archival repository, including those files and the original Git history, remains available on [GitLab](https://gitlab.com/morganx/vre2019).
-
 This repository contains source code and supporting material for the manuscript:
-
-Agricultural origins of a highly-persistent lineage of vancomycin-resistant Enterococcus faecalis in New Zealand 
+"Agricultural origins of a highly-persistent lineage of vancomycin-resistant Enterococcus faecalis in New Zealand" 
 
 Rowena Rushton-Green, Rachel L Darnell , George Taiaroa, Glen P Carter, Gregory M Cook, Xochitl C Morgan
 
-This manuscript is published at Applied & Environmental Microbiology:
-https://aem.asm.org/content/85/13/e00137-19
+This manuscript is published at [https://aem.asm.org/content/85/13/e00137-19](Applied & Environmental Microbiology):
+
+[https://pubmed.ncbi.nlm.nih.gov/31028029/](Pubmed)
+
+
+> **GitHub mirror note:** This repository was originally published in Gitlab. This repository contains the complete code and supporting material from the original project except for five generated Gubbins outputs that exceed GitHub's 100 MB per-file limit. The intact archival repository, including those files and the original Git history, remains available on [GitLab](https://gitlab.com/morganx/vre2019).
 
 ## Oversized generated files retained on GitLab
 
